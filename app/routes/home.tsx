@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import React from "react";
+import { useLoaderData } from "react-router";
 
 import type { Route } from "./+types/home";
 
@@ -9,10 +10,23 @@ import { useFullscreen } from "~/hooks/useFullscreen";
 import AudioPlayer, { type AudioPlayerRef } from "~/components/audio-player";
 import { Button } from "~/components/ui/button";
 
+import { BlurrableImage } from "~/components/blurrable-image";
+
 import { cn } from "~/lib/utils";
 
-export function meta({ }: Route.MetaArgs) {
+import { getBase64Image } from "~/utils";
+import { AnimatedShinyText } from "~/components/animated-shiny-text";
+
+export function meta({}: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
+}
+
+export async function loader({}: Route.LoaderArgs) {
+  const bride = {
+    url: "/hero.png",
+    blurURL: await getBase64Image("/hero.png"),
+  };
+  return { bride };
 }
 
 export type TContextType = {
@@ -34,11 +48,12 @@ export default function Home() {
 
   return (
     <Context.Provider value={{ open, setOpen, audioPlayerRef }}>
-      <main className="container mx-auto">
+      <main className="w-full h-full overflow-hidden">
         <Opening />
         <InvitationLayout>
           <Bride />
           <Quotes />
+          <Couple />
         </InvitationLayout>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
       </main>
@@ -48,16 +63,29 @@ export default function Home() {
 
 function InvitationLayout({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const { open } = useContext();
-  return <div className={cn("", open ? "" : "fixed")}>{children}</div>;
+  return (
+    <div
+      className={cn(
+        "absolute max-w-[700px] mx-auto top-0 left-0 right-0 -z-10",
+      )}
+    >
+      {children}
+    </div>
+  );
 }
 
 function Bride() {
+  const { bride } = useLoaderData<typeof loader>();
   const { open } = useContext();
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
       <div className="relative w-full h-full">
-        <img src="/hero.png" alt="" className="h-svh object-cover w-full" />
-        <div className="h-svh w-svw bg-black/20 absolute top-0"></div>
+        <BlurrableImage
+          blurDataUrl={bride.blurURL}
+          className="h-svh"
+          img={<img src={bride.url} alt="" className="object-cover" />}
+        />
+        <div className="h-svh w-full bg-black/20 absolute top-0"></div>
       </div>
       <div className="absolute top-8 w-full text-center flex flex-col justify-center items-center">
         <h1
@@ -107,6 +135,58 @@ function Quotes() {
   );
 }
 
+function Couple() {
+  return (
+    <div className="bg-[#d6cbc2] text-black py-20 flex flex-col gap-12 w-full">
+      <div className="flex flex-col items-center w-full">
+        <div className="overflow-hidden max-h-[440px]">
+          <img src="/couple-women.jpeg" alt="" />
+        </div>
+        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[90%] text-center -mt-16 flex flex-col gap-2">
+          <h2 className="text-2xl leading-tight font-bold antic-didone-regular">
+            Hanny Derisca Pradita
+          </h2>
+          <p className="text-sm font-medium">The daugher of</p>
+          <p className="text-base font-normal">
+            <span>Bapak Harisyah Fermana Lafri</span>
+            <br />
+            <span>&</span>
+            <br />
+            <span>Ibu Rini Hartati</span>
+          </p>
+          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 homemade-apple-regular">
+            Hanny
+          </p>
+        </div>
+      </div>
+      <p className="text-5xl font-bold my-6 text-center antic-didone-regular">
+        &
+      </p>
+      <div className="flex flex-col items-center w-full">
+        <div className="overflow-hidden max-h-[440px]">
+          <img src="/couple-man.jpeg" alt="" />
+        </div>
+        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[90%] text-center -mt-16 flex flex-col gap-2">
+          <h2 className="text-2xl leading-tight font-bold antic-didone-regular">
+            Ommi Putera Karunia
+          </h2>
+          <p className="text-sm font-medium">The son of</p>
+          <p className="text-base font-normal">
+            <span>Bapak Lukman</span>
+            <br />
+            <span>&</span>
+            <br />
+            <span>Ibu Nurwilis</span>
+          </p>
+          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 homemade-apple-regular">
+            Ommi
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Opening() {
   const [moveUp, setMoveUp] = React.useState(false);
 
@@ -114,43 +194,35 @@ function Opening() {
   const { setOpen, audioPlayerRef } = useContext();
   return (
     <motion.div
-      className="w-full h-full fixed top-0 left-0 z-50"
+      className="w-full h-full fixed max-w-[700px] mx-auto top-0 left-0 right-0"
       initial={{ x: 0 }}
-      animate={{ x: moveUp ? 1000 : 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      animate={{ x: moveUp ? 1500 : 0 }}
+      transition={{ duration: 2, ease: "easeInOut" }}
     >
-      <div className="fixed top-0 left-0">
+      <div className="absolute top-0 w-full mx-auto">
         <div className="relative w-full h-full">
           <img
             src="/opening.png"
             alt=""
             className="h-svh object-cover w-full"
           />
-          <div className="h-svh w-svw bg-black/20 absolute top-0"></div>
+          <div className="h-svh w-full bg-black/20 absolute top-0 left-0"></div>
         </div>
       </div>
-      <div className="relative top-[53svh] text-center">
+      <div className="relative top-[58svh] text-center">
         <div className="w-full h-full">
           <h1 className="text-lg mulish font-medium">WEDDING INVITATION</h1>
-          <p className="text-base mulish font-medium mt-1">
+          <p className="text-base mulish font-medium mt-2">
             You are invited to The Wedding of
           </p>
         </div>
-        <div className="w-full h-full my-8">
-          <h2 className="caveat text-5xl">Hanny & Ommi</h2>
-        </div>
-        <div className="flex flex-col">
-          <p className="text-center text-sm">
-            <span>Kepada Yth;</span>
-            <br />
-            <span>Bapak/Ibu/Saudara/i</span>
+        <div className="w-full h-full my-12">
+          <p className="text-4xl font-medium homemade-apple-regular">
+            Hanny & Ommi
           </p>
-          <h3 className="text-lg mt-2 font-normal text-center">
-            Naufal Ghifari
-          </h3>
         </div>
         <Button
-          className="mt-8"
+          className="mt-8 rounded-full"
           onClick={() => {
             setMoveUp(true);
             setOpen?.(true);
@@ -158,8 +230,9 @@ function Opening() {
             audioPlayerRef?.current?.playAudio();
           }}
         >
-          <Mail className="w-4 h-4" />
-          <span>Open the Invitation</span>
+          <AnimatedShinyText className="transition ease-out">
+            Open the Invitation
+          </AnimatedShinyText>
         </Button>
       </div>
     </motion.div>

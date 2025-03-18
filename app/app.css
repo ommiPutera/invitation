@@ -105,7 +105,7 @@ body {
     overflow-x: scroll;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 
   .antic-didone-regular {
@@ -113,9 +113,10 @@ body {
     font-weight: 400;
     font-style: normal;
   }
-  .caveat {
-    font-family: "Caveat", cursive;
-    font-optical-sizing: auto;
+  .homemade-apple-regular {
+    font-family: "Homemade Apple", cursive;
+    font-weight: 400;
+    font-style: normal;
   }
   .mulish {
     font-family: "Mulish", sans-serif;
@@ -167,6 +168,20 @@ body {
     }
     100% {
       transform: translateZ(0);
+    }
+  }
+}
+
+@theme {
+  --animate-shiny-text: shiny-text 4s infinite;
+  @keyframes shiny-text {
+    0%,
+    90%,
+    100% {
+      background-position: calc(-100% - var(--shiny-width)) 0;
+    }
+    100% {
+      background-position: calc(100% + var(--shiny-width)) 0;
     }
   }
 }
