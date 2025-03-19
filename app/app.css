@@ -113,9 +113,9 @@ body {
     font-weight: 400;
     font-style: normal;
   }
-  .homemade-apple-regular {
-    font-family: "Homemade Apple", cursive;
-    font-weight: 400;
+  .dancing-script {
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
     font-style: normal;
   }
   .mulish {

@@ -17,11 +17,11 @@ import { cn } from "~/lib/utils";
 import { getBase64Image } from "~/utils";
 import { AnimatedShinyText } from "~/components/animated-shiny-text";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
 }
 
-export async function loader({ }: Route.LoaderArgs) {
+export async function loader({}: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
@@ -48,31 +48,27 @@ export default function Home() {
 
   return (
     <Context.Provider value={{ open, setOpen, audioPlayerRef }}>
-      <main className="w-full h-full overflow-hidden bg-red-500">
-        <div className="h-svh"></div>
+      <main
+        className={cn(
+          "w-full bg-[#11110f] h-0 overflow-hidden",
+          open && "h-full",
+        )}
+      >
         <Opening />
-        {/* <InvitationLayout>
+        <InvitationLayout>
           <Bride />
           <Quotes />
           <Couple />
-        </InvitationLayout> */}
-        {/* <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} /> */}
+        </InvitationLayout>
+        <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
       </main>
     </Context.Provider>
   );
 }
 
 function InvitationLayout({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  const { open } = useContext();
-  if (!open) return <></>
   return (
-    <div
-      className={cn(
-        "absolute max-w-[700px] mx-auto top-0 left-0 right-0 -z-10 bg-[#11110f]",
-      )}
-    >
-      {children}
-    </div>
+    <div className="max-w-[700px] mx-auto top-0 left-0 right-0">{children}</div>
   );
 }
 
@@ -154,7 +150,7 @@ function Couple() {
             <br />
             <span>Ibu Rini Hartati</span>
           </p>
-          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 homemade-apple-regular">
+          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 dancing-script">
             Hanny
           </p>
         </div>
@@ -178,7 +174,7 @@ function Couple() {
             <br />
             <span>Ibu Nurwilis</span>
           </p>
-          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 homemade-apple-regular">
+          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 dancing-script">
             Ommi
           </p>
         </div>
@@ -194,7 +190,7 @@ function Opening() {
   const { setOpen, audioPlayerRef } = useContext();
   return (
     <motion.div
-      className="w-full h-full fixed max-w-[700px] mx-auto top-0 left-0 right-0"
+      className="w-full h-full fixed max-w-[700px] mx-auto top-0 left-0 right-0 z-10"
       initial={{ x: 0 }}
       animate={{ x: moveUp ? 1500 : 0 }}
       transition={{ duration: 2, ease: "easeInOut" }}
@@ -209,31 +205,31 @@ function Opening() {
           <div className="h-svh w-full bg-black/20 absolute top-0 left-0"></div>
         </div>
       </div>
-      <div className="relative top-[60vh] text-center">
-        <div className="w-full h-full">
-          <h1 className="text-lg mulish font-medium">WEDDING INVITATION</h1>
-          <p className="text-base mulish font-medium mt-2">
-            You are invited to The Wedding of
-          </p>
+      <div className="relative text-center h-full">
+        <div className="absolute bottom-10 w-full">
+          <div className="w-full">
+            <h1 className="text-lg mulish font-medium">WEDDING INVITATION</h1>
+            <p className="text-base mulish font-medium mt-2">
+              You are invited to The Wedding of
+            </p>
+          </div>
+          <div className="w-full my-8">
+            <p className="text-4xl font-medium dancing-script">Hanny & Ommi</p>
+          </div>
+          <Button
+            className="mt-8 rounded-full"
+            onClick={() => {
+              setMoveUp(true);
+              setOpen?.(true);
+              enterFullscreen();
+              audioPlayerRef?.current?.playAudio();
+            }}
+          >
+            <AnimatedShinyText className="transition ease-out">
+              Open the Invitation
+            </AnimatedShinyText>
+          </Button>
         </div>
-        <div className="w-full h-full my-12">
-          <p className="text-4xl font-medium homemade-apple-regular">
-            Hanny & Ommi
-          </p>
-        </div>
-        <Button
-          className="mt-8 rounded-full"
-          onClick={() => {
-            setMoveUp(true);
-            setOpen?.(true);
-            enterFullscreen();
-            audioPlayerRef?.current?.playAudio();
-          }}
-        >
-          <AnimatedShinyText className="transition ease-out">
-            Open the Invitation
-          </AnimatedShinyText>
-        </Button>
       </div>
     </motion.div>
   );
