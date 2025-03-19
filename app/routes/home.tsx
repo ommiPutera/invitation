@@ -17,11 +17,11 @@ import { getBase64Image } from "~/utils";
 import { Calendar1, MailOpen } from "lucide-react";
 import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
 }
 
-export async function loader({ }: Route.LoaderArgs) {
+export async function loader({}: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
@@ -43,7 +43,7 @@ const audioURL =
   "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
 
 export default function Home() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
   return (
@@ -54,7 +54,7 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
-        <Gate />
+        {/* <Gate /> */}
         <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-14">
           <Opening />
           <Quotes />
@@ -63,6 +63,7 @@ export default function Home() {
             <Countdown />
             <Galery />
           </div>
+          <Venue />
         </div>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
       </main>
@@ -265,14 +266,14 @@ const mediaItems = [
   {
     id: 3,
     type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405222/32d90035-9d23-4f72-9041-56d439acdbfd_os8b9i.jpg",
-    span: "col-span-2 row-span-3",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
+    span: "col-span-2 row-span-4",
   },
   {
     id: 4,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
-    span: "col-span-2 row-span-4",
+    span: "col-span-2 row-span-5",
   },
   {
     id: 5,
@@ -304,6 +305,59 @@ function Galery() {
   return (
     <div className="h-full overflow-y-auto overflow-x-hidden w-full">
       <InteractiveBentoGallery mediaItems={mediaItems} />
+    </div>
+  );
+}
+
+function Venue() {
+  return (
+    <div className="py-20 px-6 text-center flex flex-col justify-center items-center">
+      <span className="inline-flex justify-center text-foreground mb-2">
+        <FlowerIcon />
+      </span>
+      <h3 className="text-3xl mb-8 antic-didone-regular">Venue</h3>
+      <p className="text-base font-normal">
+        Our hearts will be full if you could share this special day with us.
+      </p>
+
+      <div className="bg-[#e7e2dc] text-black relative shadow-lg border border-neutral-200 rounded-xl p-6 text-center mt-20 w-full flex flex-col gap-8">
+        <h3 className="text-2xl antic-didone-regular">Akad Nikah</h3>
+        <div className="flex flex-col gap-2">
+          <h4 className="text-xl font-medium">Sunday</h4>
+          <div className="mt-1 flex items-center gap-2 justify-center">
+            <p className="text-4xl dancing-script">13</p>
+            <span className="h-10 border-r border-black"></span>
+            <div className="text-left text-sm">
+              <p>April</p>
+              <p>2025</p>
+            </div>
+          </div>
+          <p className="text-base font-medium">07:30 WIB - Selesai</p>
+        </div>
+        <p className="text-base font-normal">
+          {" "}
+          Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
+          Harapan, Kec. Gading Cempaka, Kota Bengkulu.
+        </p>
+        <h3 className="text-2xl antic-didone-regular">Resepsi</h3>
+        <div className="flex flex-col gap-2">
+          <h4 className="text-xl font-medium">Sunday</h4>
+          <div className="mt-1 flex items-center gap-2 justify-center">
+            <p className="text-4xl dancing-script">13</p>
+            <span className="h-10 border-r border-black"></span>
+            <div className="text-left text-sm">
+              <p>April</p>
+              <p>2025</p>
+            </div>
+          </div>
+          <p className="text-base font-medium">10:30 WIB - Selesai</p>
+        </div>
+        <p className="text-base font-normal">
+          {" "}
+          Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
+          Harapan, Kec. Gading Cempaka, Kota Bengkulu.
+        </p>
+      </div>
     </div>
   );
 }
@@ -398,7 +452,7 @@ const FlowerIcon = () => (
     id="Layer_1"
     width="28"
     height="28"
-    fill="#000"
+    fill="currentColor"
     version="1.1"
     viewBox="0 0 511.999 511.999"
   >
