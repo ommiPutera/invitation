@@ -17,11 +17,11 @@ import { cn } from "~/lib/utils";
 import { getBase64Image } from "~/utils";
 import { AnimatedShinyText } from "~/components/animated-shiny-text";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
 }
 
-export async function loader({}: Route.LoaderArgs) {
+export async function loader({ }: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
@@ -48,14 +48,15 @@ export default function Home() {
 
   return (
     <Context.Provider value={{ open, setOpen, audioPlayerRef }}>
-      <main className="w-full h-full overflow-hidden">
+      <main className="w-full h-full overflow-hidden bg-red-500">
+        <div className="h-svh"></div>
         <Opening />
-        <InvitationLayout>
+        {/* <InvitationLayout>
           <Bride />
           <Quotes />
           <Couple />
-        </InvitationLayout>
-        <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
+        </InvitationLayout> */}
+        {/* <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} /> */}
       </main>
     </Context.Provider>
   );
@@ -63,10 +64,11 @@ export default function Home() {
 
 function InvitationLayout({ children }: React.HTMLAttributes<HTMLDivElement>) {
   const { open } = useContext();
+  if (!open) return <></>
   return (
     <div
       className={cn(
-        "absolute max-w-[700px] mx-auto top-0 left-0 right-0 -z-10",
+        "absolute max-w-[700px] mx-auto top-0 left-0 right-0 -z-10 bg-[#11110f]",
       )}
     >
       {children}
@@ -88,18 +90,16 @@ function Bride() {
         <div className="h-svh w-full bg-black/20 absolute top-0"></div>
       </div>
       <div className="absolute top-8 w-full text-center flex flex-col justify-center items-center">
-        <h1
+        <div
           className={cn(
             "text-3xl tracking-tighter leading-none antic-didone-regular",
             open && "animate-slide-down",
           )}
         >
-          <span>Hanny</span>
-          <br />
-          <span>&</span>
-          <br />
-          <span>Ommi</span>
-        </h1>
+          <p>Hanny</p>
+          <p>&</p>
+          <p>Ommi</p>
+        </div>
         <p
           className={cn("font-medium mt-4 text-sm", open && "animate-slide-up")}
         >
@@ -137,7 +137,7 @@ function Quotes() {
 
 function Couple() {
   return (
-    <div className="bg-[#d6cbc2] text-black py-20 flex flex-col gap-12 w-full">
+    <div className="text-black py-20 flex flex-col gap-12 w-full">
       <div className="flex flex-col items-center w-full">
         <div className="overflow-hidden max-h-[440px]">
           <img src="/couple-women.jpeg" alt="" />
@@ -202,14 +202,14 @@ function Opening() {
       <div className="absolute top-0 w-full mx-auto">
         <div className="relative w-full h-full">
           <img
-            src="/opening.png"
+            src="/opening.jpg"
             alt=""
             className="h-svh object-cover w-full"
           />
           <div className="h-svh w-full bg-black/20 absolute top-0 left-0"></div>
         </div>
       </div>
-      <div className="relative top-[58svh] text-center">
+      <div className="relative top-[60vh] text-center">
         <div className="w-full h-full">
           <h1 className="text-lg mulish font-medium">WEDDING INVITATION</h1>
           <p className="text-base mulish font-medium mt-2">
