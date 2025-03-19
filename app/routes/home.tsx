@@ -10,8 +10,6 @@ import { useFullscreen } from "~/hooks/useFullscreen";
 import AudioPlayer, { type AudioPlayerRef } from "~/components/audio-player";
 import { Button } from "~/components/ui/button";
 
-import { BlurrableImage } from "~/components/blurrable-image";
-
 import { cn } from "~/lib/utils";
 
 import { getBase64Image } from "~/utils";
@@ -50,42 +48,32 @@ export default function Home() {
     <Context.Provider value={{ open, setOpen, audioPlayerRef }}>
       <main
         className={cn(
-          "w-full bg-[#11110f] h-0 overflow-hidden",
-          open && "h-full",
+          "w-full h-0 !overflow-hidden",
+          open && "h-full !overflow-scroll",
         )}
       >
-        <Opening />
-        <InvitationLayout>
-          <Bride />
+        <Gate />
+        <div className="max-w-[1100px] mx-auto top-0 left-0 right-0 pb-14">
+          <Opening />
           <Quotes />
           <Couple />
-        </InvitationLayout>
+        </div>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
       </main>
     </Context.Provider>
   );
 }
 
-function InvitationLayout({ children }: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div className="max-w-[700px] mx-auto top-0 left-0 right-0">{children}</div>
-  );
-}
-
-function Bride() {
+function Opening() {
   const { bride } = useLoaderData<typeof loader>();
   const { open } = useContext();
   return (
     <div className="w-full h-full relative">
       <div className="relative w-full h-full">
-        <BlurrableImage
-          blurDataUrl={bride.blurURL}
-          className="h-svh"
-          img={<img src={bride.url} alt="" className="object-cover" />}
-        />
+        <img src={bride.url} alt="" className="object-cover h-svh" />
         <div className="h-svh w-full bg-black/20 absolute top-0"></div>
       </div>
-      <div className="absolute top-8 w-full text-center flex flex-col justify-center items-center">
+      <div className="absolute top-[6svh] w-full text-center flex flex-col justify-center items-center">
         <div
           className={cn(
             "text-3xl tracking-tighter leading-none antic-didone-regular",
@@ -120,12 +108,16 @@ function Quotes() {
       <span className="inline-flex justify-center">
         <FlowerIcon />
       </span>
-      <h3 className="text-3xl mb-4 antic-didone-regular">Bound by love</h3>
-      <p className="text-sm font-normal">
-        And one of His signs is that He created for you spouses from among
-        yourselves so that you may find tranquility in them. And He has placed
-        between you compassion and mercy. Surely in this are signs for people
-        who reflect.
+      <h3 className="text-3xl mb-8 antic-didone-regular">Bound by love</h3>
+      <p className="text-base font-normal text-black/70">
+        "And one of His signs is that{" "}
+        <b className="font-semibold text-black">
+          He created for you spouses from among yourselves
+        </b>{" "}
+        so that you may find{" "}
+        <b className="font-semibold text-black">tranquility in them</b>. And He
+        has placed between you compassion and mercy. Surely in this are signs
+        for people who reflect."
       </p>
     </div>
   );
@@ -138,35 +130,37 @@ function Couple() {
         <div className="overflow-hidden max-h-[440px]">
           <img src="/couple-women.jpeg" alt="" />
         </div>
-        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[90%] text-center -mt-16 flex flex-col gap-2">
-          <h2 className="text-2xl leading-tight font-bold antic-didone-regular">
+        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[85%] text-center -mt-16 flex flex-col gap-2">
+          <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
             Hanny Derisca Pradita
           </h2>
-          <p className="text-sm font-medium">The daugher of</p>
-          <p className="text-base font-normal">
+          <p className="text-2xl my-4 font-medium dancing-script">
+            The daugher of
+          </p>
+          <p className="text-sm font-normal">
             <span>Bapak Harisyah Fermana Lafri</span>
             <br />
             <span>&</span>
             <br />
             <span>Ibu Rini Hartati</span>
           </p>
-          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 dancing-script">
+          <p className="text-9xl font-medium text-black/20 absolute -bottom-12 -rotate-6 left-6 opacity-50 dancing-script">
             Hanny
           </p>
         </div>
       </div>
-      <p className="text-5xl font-bold my-6 text-center antic-didone-regular">
+      <p className="text-2xl font-bold text-center antic-didone-regular text-white">
         &
       </p>
       <div className="flex flex-col items-center w-full">
         <div className="overflow-hidden max-h-[440px]">
           <img src="/couple-man.jpeg" alt="" />
         </div>
-        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[90%] text-center -mt-16 flex flex-col gap-2">
-          <h2 className="text-2xl leading-tight font-bold antic-didone-regular">
+        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[85%] text-center -mt-16 flex flex-col gap-2">
+          <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
             Ommi Putera Karunia
           </h2>
-          <p className="text-sm font-medium">The son of</p>
+          <p className="text-2xl my-4 font-medium dancing-script">The son of</p>
           <p className="text-base font-normal">
             <span>Bapak Lukman</span>
             <br />
@@ -174,7 +168,7 @@ function Couple() {
             <br />
             <span>Ibu Nurwilis</span>
           </p>
-          <p className="text-8xl font-medium text-[#baaba0] absolute -bottom-14 left-12 opacity-50 dancing-script">
+          <p className="text-9xl font-medium text-black/20 absolute -bottom-12 left-6 opacity-50 dancing-script">
             Ommi
           </p>
         </div>
@@ -183,14 +177,14 @@ function Couple() {
   );
 }
 
-function Opening() {
+function Gate() {
   const [moveUp, setMoveUp] = React.useState(false);
 
   const { enterFullscreen } = useFullscreen<HTMLDivElement>();
   const { setOpen, audioPlayerRef } = useContext();
   return (
     <motion.div
-      className="w-full h-full fixed max-w-[700px] mx-auto top-0 left-0 right-0 z-10"
+      className="w-full h-screen fixed max-w-[1100px] mx-auto top-0 left-0 right-0 z-50"
       initial={{ x: 0 }}
       animate={{ x: moveUp ? 1500 : 0 }}
       transition={{ duration: 2, ease: "easeInOut" }}
@@ -206,15 +200,15 @@ function Opening() {
         </div>
       </div>
       <div className="relative text-center h-full">
-        <div className="absolute bottom-10 w-full">
+        <div className="absolute bottom-12 w-full">
           <div className="w-full">
-            <h1 className="text-lg mulish font-medium">WEDDING INVITATION</h1>
+            <h1 className="text-lg mulish font-bold">WEDDING INVITATION</h1>
             <p className="text-base mulish font-medium mt-2">
               You are invited to The Wedding of
             </p>
           </div>
-          <div className="w-full my-8">
-            <p className="text-4xl font-medium dancing-script">Hanny & Ommi</p>
+          <div className="w-full mt-6 mb-12">
+            <p className="text-5xl font-medium dancing-script">Hanny & Ommi</p>
           </div>
           <Button
             className="mt-8 rounded-full"
