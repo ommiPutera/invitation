@@ -15,11 +15,11 @@ import { cn } from "~/lib/utils";
 import { getBase64Image } from "~/utils";
 import { AnimatedShinyText } from "~/components/animated-shiny-text";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
 }
 
-export async function loader({}: Route.LoaderArgs) {
+export async function loader({ }: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
@@ -199,15 +199,15 @@ function Gate() {
           <div className="h-svh w-full bg-black/20 absolute top-0 left-0"></div>
         </div>
       </div>
-      <div className="relative text-center h-full">
-        <div className="absolute bottom-12 w-full">
+      <div className="relative text-center h-svh">
+        <div className="absolute bottom-[6svh] w-svw">
           <div className="w-full">
-            <h1 className="text-lg mulish font-bold">WEDDING INVITATION</h1>
-            <p className="text-base mulish font-medium mt-2">
+            <h1 className="text-base mulish font-bold">WEDDING INVITATION</h1>
+            <p className="text-sm mulish font-medium mt-2">
               You are invited to The Wedding of
             </p>
           </div>
-          <div className="w-full mt-6 mb-12">
+          <div className="w-full mt-6 mb-8">
             <p className="text-5xl font-medium dancing-script">Hanny & Ommi</p>
           </div>
           <Button
