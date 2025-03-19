@@ -1,19 +1,21 @@
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
 import React from "react";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 import type { Route } from "./+types/home";
 
 import { useFullscreen } from "~/hooks/useFullscreen";
 
+import { AnimatedShinyText } from "~/components/animated-shiny-text";
 import AudioPlayer, { type AudioPlayerRef } from "~/components/audio-player";
+import { SlidingNumber } from "~/components/sliding-number";
 import { Button } from "~/components/ui/button";
 
 import { cn } from "~/lib/utils";
 
 import { getBase64Image } from "~/utils";
-import { AnimatedShinyText } from "~/components/animated-shiny-text";
+import { Calendar1, MailOpen } from "lucide-react";
+import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
@@ -53,10 +55,14 @@ export default function Home() {
         )}
       >
         <Gate />
-        <div className="max-w-[1100px] mx-auto top-0 left-0 right-0 pb-14">
+        <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-14">
           <Opening />
           <Quotes />
           <Couple />
+          <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center flex flex-col gap-20 justify-center items-center">
+            <Countdown />
+            <Galery />
+          </div>
         </div>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
       </main>
@@ -177,6 +183,131 @@ function Couple() {
   );
 }
 
+function Countdown() {
+  const targetDate = new Date("2025-04-13T00:00:00").getTime();
+  const [timeLeft, setTimeLeft] = React.useState(targetDate - Date.now());
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const remaining = targetDate - Date.now();
+      if (remaining <= 0) {
+        clearInterval(interval);
+        setTimeLeft(0);
+      } else {
+        setTimeLeft(remaining);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+  const seconds = Math.floor((timeLeft / 1000) % 60);
+
+  return (
+    <div>
+      <div className="flex items-center gap-3">
+        <div className="relative mr-10">
+          <SlidingNumber value={days} padStart={true} />
+          <span className="text-neutral-600 text-base absolute -top-1 left-8 antic-didone-regular">
+            Days
+          </span>
+        </div>
+        <div className="relative mr-10">
+          <SlidingNumber value={hours} padStart={true} />
+          <span className="text-neutral-600 text-base absolute -top-1 left-8 antic-didone-regular">
+            Hours
+          </span>
+        </div>
+        <div className="relative mr-10">
+          <SlidingNumber value={minutes} padStart={true} />
+          <span className="text-neutral-600 text-base absolute -top-1 left-8 antic-didone-regular">
+            Mins
+          </span>
+        </div>
+        <div className="relative mr-10">
+          <SlidingNumber value={seconds} padStart={true} />
+          <span className="text-neutral-600 text-base absolute -top-1 left-8 antic-didone-regular">
+            Secs
+          </span>
+        </div>
+      </div>
+      <Button size="lg" className="mt-12 rounded-full bg-neutral-700" asChild>
+        <Link
+          to="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MGE1YXZjYjVoa21vbGRxODhyYmdpZjNra3Igb21pcHV0cmFrYXJ1bmlhQG0&tmsrc=omiputrakarunia%40gmail.com"
+          target="_blank"
+        >
+          <Calendar1 className="text-white size-5" />
+          <AnimatedShinyText className="transition ease-out text-white">
+            Save the Date
+          </AnimatedShinyText>
+        </Link>
+      </Button>
+    </div>
+  );
+}
+
+const mediaItems = [
+  {
+    id: 1,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406276/DSCF7159_n0it9i.jpg",
+    span: "col-span-2 row-span-5",
+  },
+  {
+    id: 2,
+    type: "video",
+    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
+    span: "col-span-2 row-span-3",
+  },
+  {
+    id: 3,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405222/32d90035-9d23-4f72-9041-56d439acdbfd_os8b9i.jpg",
+    span: "col-span-2 row-span-3",
+  },
+  {
+    id: 4,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
+    span: "col-span-2 row-span-4",
+  },
+  {
+    id: 5,
+    type: "video",
+    title: "Bird Parrot",
+    desc: "Vibrant feathered charm",
+    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405083/e0c5a461-4974-4949-813c-a610cb06cb75_kgq7tl.mov",
+    span: "col-span-2 row-span-3",
+  },
+  {
+    id: 6,
+    type: "image",
+    title: "Beach Paradise",
+    desc: "Sunny tropical beach",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
+    span: "col-span-2 row-span-6",
+  },
+  {
+    id: 7,
+    type: "video",
+    title: "Shiva Temple",
+    desc: "Peaceful Shiva sanctuary.",
+    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
+    span: "col-span-2 row-span-4",
+  },
+];
+
+function Galery() {
+  return (
+    <div className="h-full overflow-y-auto overflow-x-hidden w-full">
+      <InteractiveBentoGallery mediaItems={mediaItems} />
+    </div>
+  );
+}
+
 function Gate() {
   const [moveUp, setMoveUp] = React.useState(false);
 
@@ -184,7 +315,7 @@ function Gate() {
   const { setOpen, audioPlayerRef } = useContext();
   return (
     <motion.div
-      className="w-full h-screen fixed max-w-[1100px] mx-auto top-0 left-0 right-0 z-50"
+      className="w-full h-screen fixed max-w-[700px] mx-auto top-0 left-0 right-0 z-50"
       initial={{ x: 0 }}
       animate={{ x: moveUp ? 1500 : 0 }}
       transition={{ duration: 2, ease: "easeInOut" }}
@@ -211,7 +342,7 @@ function Gate() {
             <p className="text-5xl font-medium dancing-script">Hanny & Ommi</p>
           </div>
           <Button
-            className="mt-8 rounded-full"
+            className="mt-8 rounded-full bg-neutral-700"
             onClick={() => {
               setMoveUp(true);
               setOpen?.(true);
@@ -219,7 +350,8 @@ function Gate() {
               audioPlayerRef?.current?.playAudio();
             }}
           >
-            <AnimatedShinyText className="transition ease-out">
+            <MailOpen className="text-white size-4" />
+            <AnimatedShinyText className="transition ease-out text-white">
               Open the Invitation
             </AnimatedShinyText>
           </Button>
