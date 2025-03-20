@@ -87,12 +87,12 @@ const mediaItems = [
     url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
     span: "col-span-2 row-span-3",
   },
-  {
-    id: 3,
-    type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
-    span: "col-span-2 row-span-4",
-  },
+  // {
+  //   id: 3,
+  //   type: "image",
+  //   url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
+  //   span: "col-span-2 row-span-4",
+  // },
   {
     id: 4,
     type: "image",
@@ -106,16 +106,16 @@ const mediaItems = [
     span: "col-span-2 row-span-3",
   },
   {
-    id: 6,
-    type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
-    span: "col-span-2 row-span-6",
-  },
-  {
     id: 7,
     type: "video",
     url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
     span: "col-span-2 row-span-4",
+  },
+  {
+    id: 6,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
+    span: "col-span-2 row-span-6",
   },
 ];
 
@@ -133,7 +133,7 @@ const audioURL =
   "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
 
 export default function Home() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
   return (
@@ -144,8 +144,8 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
-        {/* <Gate /> */}
-        <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-14">
+        <Gate />
+        <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-0">
           <Opening />
           <Quotes />
           <Couple />
@@ -154,6 +154,7 @@ export default function Home() {
             <Galery />
           </div>
           <Venue />
+          <Thanks />
         </div>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
       </main>
@@ -208,9 +209,7 @@ function Quotes() {
         <span className="inline-flex justify-center">
           <FlowerIcon />
         </span>
-        <h3 className="text-3xl mb-8 antic-didone-regular">
-          Bound by love {isVisible ? "v" : "n"}
-        </h3>
+        <h3 className="text-3xl mb-8 antic-didone-regular">Bound by love</h3>
       </div>
       <div className={cn("", isVisible && "animate-slide-up")}>
         <p className="text-base font-normal text-black/70">
@@ -447,6 +446,39 @@ function Venue() {
           Harapan, Kec. Gading Cempaka, Kota Bengkulu.
         </p>
       </div>
+    </div>
+  );
+}
+
+function Thanks() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
+  return (
+    <div className="w-full h-full">
+      <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
+        <div className={cn("", isVisible && "animate-slide-down")} ref={ref}>
+          <span className="inline-flex justify-center">
+            <FlowerIcon />
+          </span>
+          <h3 className="text-3xl mb-8 antic-didone-regular">Thank You</h3>
+        </div>
+        <div className={cn("", isVisible && "animate-slide-up")}>
+          <p className="text-base font-normal text-black/70 max-w-[300px] mx-auto">
+            The pleasure of your company is an invaluable gift for us. We look
+            forward to start forever with you by our side.
+          </p>
+        </div>
+      </div>
+      <div className="p-6 text-center">
+        <p className="text-sm font-normal">
+          Copyright ©2025 Created with ❤️ by Ommi
+        </p>
+      </div>
+      <img
+        src="https://res.cloudinary.com/ommiputera/image/upload/v1742463413/DSCF7576_po0pfl.jpg"
+        alt=""
+        className="max-h-[440px]"
+      />
     </div>
   );
 }
