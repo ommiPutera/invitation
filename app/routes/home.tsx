@@ -17,11 +17,11 @@ import { getBase64Image } from "~/utils";
 import { Calendar1, MailOpen } from "lucide-react";
 import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
 }
 
-export async function loader({}: Route.LoaderArgs) {
+export async function loader({ }: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
@@ -43,7 +43,7 @@ const audioURL =
   "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
 
 export default function Home() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
   return (
@@ -54,7 +54,7 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
-        {/* <Gate /> */}
+        <Gate />
         <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-14">
           <Opening />
           <Quotes />
