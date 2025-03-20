@@ -16,18 +16,108 @@ import { cn } from "~/lib/utils";
 import { getBase64Image } from "~/utils";
 import { Calendar1, MailOpen } from "lucide-react";
 import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
+import { useIsVisible } from "~/hooks/useIsVisble";
 
-export function meta({ }: Route.MetaArgs) {
-  return [{ title: "Wedding of Hanny & Ommi - 13 April 2025" }];
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Wedding of Hanny & Ommi - 13 April 2025" },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742406276/DSCF7159_n0it9i.jpg",
+      as: "image",
+      type: "image/jpg",
+    },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
+      as: "image",
+      type: "image/jpg",
+    },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
+      as: "image",
+      type: "image/jpg",
+    },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
+      as: "image",
+      type: "image/jpg",
+    },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
+      as: "video",
+      type: "video/mov",
+    },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/video/upload/v1742405083/e0c5a461-4974-4949-813c-a610cb06cb75_kgq7tl.mov",
+      as: "video",
+      type: "video/mov",
+    },
+    {
+      rel: "preload",
+      href: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
+      as: "video",
+      type: "video/mov",
+    },
+  ];
 }
 
-export async function loader({ }: Route.LoaderArgs) {
+export async function loader({}: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
   };
   return { bride };
 }
+
+const mediaItems = [
+  {
+    id: 1,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406276/DSCF7159_n0it9i.jpg",
+    span: "col-span-2 row-span-5",
+  },
+  {
+    id: 2,
+    type: "video",
+    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
+    span: "col-span-2 row-span-3",
+  },
+  {
+    id: 3,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
+    span: "col-span-2 row-span-4",
+  },
+  {
+    id: 4,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
+    span: "col-span-2 row-span-5",
+  },
+  {
+    id: 5,
+    type: "video",
+    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405083/e0c5a461-4974-4949-813c-a610cb06cb75_kgq7tl.mov",
+    span: "col-span-2 row-span-3",
+  },
+  {
+    id: 6,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
+    span: "col-span-2 row-span-6",
+  },
+  {
+    id: 7,
+    type: "video",
+    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
+    span: "col-span-2 row-span-4",
+  },
+];
 
 export type TContextType = {
   open: boolean;
@@ -43,7 +133,7 @@ const audioURL =
   "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
 
 export default function Home() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
   return (
@@ -54,7 +144,7 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
-        <Gate />
+        {/* <Gate /> */}
         <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-14">
           <Opening />
           <Quotes />
@@ -110,60 +200,56 @@ function Opening() {
 }
 
 function Quotes() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
   return (
     <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
-      <span className="inline-flex justify-center">
-        <FlowerIcon />
-      </span>
-      <h3 className="text-3xl mb-8 antic-didone-regular">Bound by love</h3>
-      <p className="text-base font-normal text-black/70">
-        "And one of His signs is that{" "}
-        <b className="font-semibold text-black">
-          He created for you spouses from among yourselves
-        </b>{" "}
-        so that you may find{" "}
-        <b className="font-semibold text-black">tranquility in them</b>. And He
-        has placed between you compassion and mercy. Surely in this are signs
-        for people who reflect."
-      </p>
+      <div className={cn("", isVisible && "animate-slide-down")} ref={ref}>
+        <span className="inline-flex justify-center">
+          <FlowerIcon />
+        </span>
+        <h3 className="text-3xl mb-8 antic-didone-regular">
+          Bound by love {isVisible ? "v" : "n"}
+        </h3>
+      </div>
+      <div className={cn("", isVisible && "animate-slide-up")}>
+        <p className="text-base font-normal text-black/70">
+          "And one of His signs is that{" "}
+          <b className="font-semibold text-black">
+            He created for you spouses from among yourselves
+          </b>{" "}
+          so that you may find{" "}
+          <b className="font-semibold text-black">tranquility in them</b>. And
+          He has placed between you compassion and mercy. Surely in this are
+          signs for people who reflect."
+        </p>
+        <p className="text-sm mt-8 font-normal text-black/70">
+          Surah Ar-Rum (30:21)
+        </p>
+      </div>
     </div>
   );
 }
 
 function Couple() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
   return (
     <div className="text-black py-20 flex flex-col gap-12 w-full">
-      <div className="flex flex-col items-center w-full">
-        <div className="overflow-hidden max-h-[440px]">
-          <img src="/couple-women.jpeg" alt="" />
-        </div>
-        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[85%] text-center -mt-16 flex flex-col gap-2">
-          <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
-            Hanny Derisca Pradita
-          </h2>
-          <p className="text-2xl my-4 font-medium dancing-script">
-            The daugher of
-          </p>
-          <p className="text-sm font-normal">
-            <span>Bapak Harisyah Fermana Lafri</span>
-            <br />
-            <span>&</span>
-            <br />
-            <span>Ibu Rini Hartati</span>
-          </p>
-          <p className="text-9xl font-medium text-black/20 absolute -bottom-12 -rotate-6 left-6 opacity-50 dancing-script">
-            Hanny
-          </p>
-        </div>
-      </div>
+      <Bride />
       <p className="text-2xl font-bold text-center antic-didone-regular text-white">
         &
       </p>
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center w-full" ref={ref}>
         <div className="overflow-hidden max-h-[440px]">
           <img src="/couple-man.jpeg" alt="" />
         </div>
-        <div className="bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[85%] text-center -mt-16 flex flex-col gap-2">
+        <div
+          className={cn(
+            "bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[85%] text-center -mt-16 flex flex-col gap-2",
+            isVisible && "animate-slide-up",
+          )}
+        >
           <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
             Ommi Putera Karunia
           </h2>
@@ -183,8 +269,45 @@ function Couple() {
     </div>
   );
 }
+function Bride() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
+  return (
+    <div className="flex flex-col items-center w-full" ref={ref}>
+      <div className="overflow-hidden max-h-[440px]">
+        <img src="/couple-women.jpeg" alt="" />
+      </div>
+      <div
+        className={cn(
+          "bg-[#e7e2dc] relative shadow-lg border border-neutral-200 rounded-xl p-6 w-[85%] text-center -mt-16 flex flex-col gap-2",
+          isVisible && "animate-slide-up",
+        )}
+      >
+        <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
+          Hanny Derisca Pradita
+        </h2>
+        <p className="text-2xl my-4 font-medium dancing-script">
+          The daugher of
+        </p>
+        <p className="text-sm font-normal">
+          <span>Bapak Harisyah Fermana Lafri</span>
+          <br />
+          <span>&</span>
+          <br />
+          <span>Ibu Rini Hartati</span>
+        </p>
+        <p className="text-9xl font-medium text-black/20 absolute -bottom-12 -rotate-6 left-6 opacity-50 dancing-script">
+          Hanny
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function Countdown() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
+
   const targetDate = new Date("2025-04-13T00:00:00").getTime();
   const [timeLeft, setTimeLeft] = React.useState(targetDate - Date.now());
 
@@ -235,71 +358,29 @@ function Countdown() {
           </span>
         </div>
       </div>
-      <Button size="lg" className="mt-12 rounded-full bg-neutral-700" asChild>
-        <Link
-          to="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MGE1YXZjYjVoa21vbGRxODhyYmdpZjNra3Igb21pcHV0cmFrYXJ1bmlhQG0&tmsrc=omiputrakarunia%40gmail.com"
-          target="_blank"
+      <div ref={ref}>
+        <Button
+          size="lg"
+          className={cn(
+            "mt-12 rounded-full bg-neutral-700",
+            isVisible && "animate-slide-down",
+          )}
+          asChild
         >
-          <Calendar1 className="text-white size-5" />
-          <AnimatedShinyText className="transition ease-out text-white">
-            Save the Date
-          </AnimatedShinyText>
-        </Link>
-      </Button>
+          <Link
+            to="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MGE1YXZjYjVoa21vbGRxODhyYmdpZjNra3Igb21pcHV0cmFrYXJ1bmlhQG0&tmsrc=omiputrakarunia%40gmail.com"
+            target="_blank"
+          >
+            <Calendar1 className="text-white size-5" />
+            <AnimatedShinyText className="transition ease-out text-white">
+              Save the Date
+            </AnimatedShinyText>
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }
-
-const mediaItems = [
-  {
-    id: 1,
-    type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406276/DSCF7159_n0it9i.jpg",
-    span: "col-span-2 row-span-5",
-  },
-  {
-    id: 2,
-    type: "video",
-    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
-    span: "col-span-2 row-span-3",
-  },
-  {
-    id: 3,
-    type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
-    span: "col-span-2 row-span-4",
-  },
-  {
-    id: 4,
-    type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
-    span: "col-span-2 row-span-5",
-  },
-  {
-    id: 5,
-    type: "video",
-    title: "Bird Parrot",
-    desc: "Vibrant feathered charm",
-    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405083/e0c5a461-4974-4949-813c-a610cb06cb75_kgq7tl.mov",
-    span: "col-span-2 row-span-3",
-  },
-  {
-    id: 6,
-    type: "image",
-    title: "Beach Paradise",
-    desc: "Sunny tropical beach",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
-    span: "col-span-2 row-span-6",
-  },
-  {
-    id: 7,
-    type: "video",
-    title: "Shiva Temple",
-    desc: "Peaceful Shiva sanctuary.",
-    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
-    span: "col-span-2 row-span-4",
-  },
-];
 
 function Galery() {
   return (
@@ -310,17 +391,25 @@ function Galery() {
 }
 
 function Venue() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
   return (
     <div className="py-20 px-6 text-center flex flex-col justify-center items-center">
       <span className="inline-flex justify-center text-foreground mb-2">
         <FlowerIcon />
       </span>
-      <h3 className="text-3xl mb-8 antic-didone-regular">Venue</h3>
-      <p className="text-base font-normal">
-        Our hearts will be full if you could share this special day with us.
-      </p>
-
-      <div className="bg-[#e7e2dc] text-black relative shadow-lg border border-neutral-200 rounded-xl p-6 text-center mt-20 w-full flex flex-col gap-8">
+      <div ref={ref}>
+        <h3 className="text-3xl mb-8 antic-didone-regular">Venue</h3>
+        <p className="text-base font-normal max-w-[300px]">
+          Our hearts will be full if you could share this special day with us.
+        </p>
+      </div>
+      <div
+        className={cn(
+          "bg-[#e7e2dc] text-black relative shadow-lg border border-neutral-200 rounded-xl px-6 py-12 text-center mt-20 w-full flex flex-col gap-8",
+          isVisible && "animate-slide-up",
+        )}
+      >
         <h3 className="text-2xl antic-didone-regular">Akad Nikah</h3>
         <div className="flex flex-col gap-2">
           <h4 className="text-xl font-medium">Sunday</h4>
@@ -334,12 +423,12 @@ function Venue() {
           </div>
           <p className="text-base font-medium">07:30 WIB - Selesai</p>
         </div>
-        <p className="text-base font-normal">
+        <p className="text-sm text-black/70 font-normal">
           {" "}
           Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
           Harapan, Kec. Gading Cempaka, Kota Bengkulu.
         </p>
-        <h3 className="text-2xl antic-didone-regular">Resepsi</h3>
+        <h3 className="text-2xl antic-didone-regular mt-4">Resepsi</h3>
         <div className="flex flex-col gap-2">
           <h4 className="text-xl font-medium">Sunday</h4>
           <div className="mt-1 flex items-center gap-2 justify-center">
@@ -352,7 +441,7 @@ function Venue() {
           </div>
           <p className="text-base font-medium">10:30 WIB - Selesai</p>
         </div>
-        <p className="text-base font-normal">
+        <p className="text-sm text-black/70 font-normal">
           {" "}
           Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
           Harapan, Kec. Gading Cempaka, Kota Bengkulu.
@@ -384,8 +473,8 @@ function Gate() {
           <div className="h-svh w-full bg-black/20 absolute top-0 left-0"></div>
         </div>
       </div>
-      <div className="relative text-center h-svh">
-        <div className="absolute bottom-[6svh] w-svw">
+      <div className="relative text-center h-svh w-full">
+        <div className="absolute bottom-[6svh] w-full">
           <div className="w-full">
             <h1 className="text-base mulish font-bold">WEDDING INVITATION</h1>
             <p className="text-sm mulish font-medium mt-2">
