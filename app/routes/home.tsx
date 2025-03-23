@@ -26,7 +26,7 @@ import { cn } from "~/lib/utils";
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import { createCommnet, getCommnet } from "~/lib/comment.server";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Wedding of Hanny & Ommi - 13 April 2025" },
     {
@@ -101,7 +101,7 @@ export async function action({ request }: Route.LoaderArgs) {
   }
 }
 
-export async function loader({}: Route.LoaderArgs) {
+export async function loader({ }: Route.LoaderArgs) {
   const comments = await getCommnet();
   return data({ comments });
 }
@@ -498,7 +498,7 @@ function Venue() {
       <Button
         size="lg"
         className="mt-8 rounded-full bg-neutral-700"
-        onClick={() => {}}
+        onClick={() => { }}
       >
         <MapPin className="text-white size-4" />
         <AnimatedShinyText className="transition ease-out text-white">
@@ -602,11 +602,11 @@ function WeddingWishes() {
             </div>
           </Form>
         </div>
-        {!!comments.length && (
+        {!!comments?.length && (
           <div className="mt-12">
             <ScrollArea className="h-[380px] w-full rounded-md">
               <div className="flex flex-col gap-3">
-                {comments.map((comment) => {
+                {comments?.map((comment) => {
                   const date = format(
                     new Date(comment.createdAt),
                     "dd MMMM yyyy hh:mm",
