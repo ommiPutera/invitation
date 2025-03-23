@@ -21,7 +21,6 @@ export async function createCommnet({
 }
 
 export async function getCommnet(): Promise<Comment[]> {
-  return [];
   return await prisma.comment.findMany({
     where: {},
     orderBy: {
