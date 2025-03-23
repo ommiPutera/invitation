@@ -21,7 +21,10 @@ export async function createCommnet({
 }
 
 export async function getCommnet(): Promise<Comment[]> {
+  // return [];
   return await prisma.comment.findMany({
+    take: 100, // Ambil 100 data per batch
+    skip: 0, // Bisa diganti sesuai offset
     orderBy: {
       createdAt: "desc",
     },
