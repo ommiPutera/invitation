@@ -1,4 +1,3 @@
-import { Pause, Play } from "lucide-react";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 
 import { Button } from "~/components/ui/button";

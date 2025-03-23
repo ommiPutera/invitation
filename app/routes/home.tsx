@@ -24,7 +24,7 @@ import { useIsVisible } from "~/hooks/useIsVisble";
 import { cn } from "~/lib/utils";
 
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
-import { createCommnet, fetchAllCommentsWithCursor } from "~/lib/comment.server";
+import { createCommnet, getCommnet } from "~/lib/comment.server";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -102,7 +102,7 @@ export async function action({ request }: Route.LoaderArgs) {
 }
 
 export async function loader({ }: Route.LoaderArgs) {
-  const comments = await fetchAllCommentsWithCursor();
+  const comments = await getCommnet();
   return data({ comments });
 }
 
