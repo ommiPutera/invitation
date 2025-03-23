@@ -1,11 +1,19 @@
+import React from "react";
 import {
+  data,
   isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
+import { getToast } from "remix-toast";
+
+import { Toaster } from "./components/ui/toaster";
+
+import { useToast } from "./hooks/useToast";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -23,7 +31,31 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { toast, headers } = await getToast(request);
+  return data({ toastData: toast }, { headers });
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { toastData } = useLoaderData<typeof loader>();
+
+  const { toast } = useToast();
+  React.useEffect(() => {
+    switch (toastData?.type) {
+      case "success":
+        toast({ title: toastData?.message, variant: "success" });
+        break;
+      case "error":
+        toast({ title: toastData?.message, variant: "destructive" });
+        break;
+      case "info":
+        toast({ title: toastData?.message, variant: "default" });
+        break;
+      default:
+        break;
+    }
+  }, [toast, toastData]);
+
   return (
     <html lang="en">
       <head>
@@ -52,6 +84,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>

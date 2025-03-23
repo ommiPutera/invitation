@@ -1,6 +1,12 @@
-import { animate, motion } from "framer-motion";
+import { PrismaClient } from "@prisma/client";
+
+import { motion } from "framer-motion";
+import { Calendar1, MailOpen, MapPin } from "lucide-react";
 import React from "react";
-import { Link, useLoaderData } from "react-router";
+import { data, Form, Link, useLoaderData, useSearchParams } from "react-router";
+import { dataWithSuccess } from "remix-toast";
+import { format } from "date-fns";
+import { id as locale } from "date-fns/locale";
 
 import type { Route } from "./+types/home";
 
@@ -8,20 +14,22 @@ import { useFullscreen } from "~/hooks/useFullscreen";
 
 import { AnimatedShinyText } from "~/components/animated-shiny-text";
 import AudioPlayer, { type AudioPlayerRef } from "~/components/audio-player";
+import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
 import { SlidingNumber } from "~/components/sliding-number";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { ScrollArea } from "~/components/ui/scroll-area";
+import { Textarea } from "~/components/ui/textarea";
+
+import { useIsVisible } from "~/hooks/useIsVisble";
 
 import { cn } from "~/lib/utils";
 
-import { getBase64Image } from "~/utils";
-import { Calendar1, MailOpen } from "lucide-react";
-import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
-import { useIsVisible } from "~/hooks/useIsVisble";
-import { Textarea } from "~/components/ui/textarea";
-import { Input } from "~/components/ui/input";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 
-export function meta({ }: Route.MetaArgs) {
+const prisma = new PrismaClient();
+
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "Wedding of Hanny & Ommi - 13 April 2025" },
     {
@@ -63,12 +71,44 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-export async function loader({ }: Route.LoaderArgs) {
-  const bride = {
-    url: "/hero.png",
-    blurURL: await getBase64Image("/hero.png"),
-  };
-  return { bride };
+export async function action({ request }: Route.LoaderArgs) {
+  if (request.method !== "POST") {
+    return { success: false, error: "Method not allowed" };
+  }
+
+  const formData = await request.formData();
+  const content = formData.get("content");
+  const name = formData.get("name");
+  const attendance = formData.get("attendance");
+
+  if (typeof content !== "string" || typeof name !== "string") {
+    return { success: false, error: "gagal" };
+  }
+
+  try {
+    await prisma.comment.create({
+      data: {
+        content,
+        name,
+        attendance: attendance === "attend" ? true : false,
+      },
+    });
+    return dataWithSuccess(
+      { success: true },
+      "Terima Kasih with ❤️ - Hanny & Ommi",
+    );
+  } catch (error) {
+    return data({ success: false, error: "Gagal" });
+  }
+}
+
+export async function loader({}: Route.LoaderArgs) {
+  const comments = await prisma.comment.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return data({ comments });
 }
 
 const mediaItems = [
@@ -124,7 +164,7 @@ const audioURL =
   "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
 
 export default function Home() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
   return (
@@ -135,8 +175,8 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
-        {/* <Gate /> */}
-        <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-0">
+        <Gate />
+        <div className="max-w-[500px] mx-auto top-0 left-0 right-0 pb-0">
           <Opening />
           <Quotes />
           <Couple />
@@ -145,6 +185,14 @@ export default function Home() {
             <Galery />
           </div>
           <Venue />
+          <Gift />
+          <div className="h-full w-full -mb-32">
+            <img
+              src="https://res.cloudinary.com/ommiputera/image/upload/v1742748082/WhatsApp_Image_2025-03-23_at_22.34.10_upxasu.jpg"
+              alt=""
+              className="h-[390px] w-full object-cover"
+            />
+          </div>
           <WeddingWishes />
           <Thanks />
         </div>
@@ -155,18 +203,21 @@ export default function Home() {
 }
 
 function Opening() {
-  const { bride } = useLoaderData<typeof loader>();
   const { open } = useContext();
   return (
     <div className="w-full h-full relative">
       <div className="relative w-full h-full">
-        <img src={bride.url} alt="" className="object-cover h-svh" />
+        <img
+          src="https://res.cloudinary.com/ommiputera/image/upload/v1742748082/WhatsApp_Image_2025-03-23_at_22.02.54_tup4ak.jpg"
+          alt=""
+          className="object-cover w-full h-svh"
+        />
         <div className="h-svh w-full bg-black/20 absolute top-0"></div>
       </div>
       <div className="absolute top-[6svh] w-full text-center flex flex-col justify-center items-center">
         <div
           className={cn(
-            "text-3xl tracking-tighter leading-none antic-didone-regular",
+            "text-4xl tracking-tighter leading-tight antic-didone-regular",
             open && "animate-slide-down",
           )}
         >
@@ -175,9 +226,12 @@ function Opening() {
           <p>Ommi</p>
         </div>
         <p
-          className={cn("font-medium mt-4 text-sm", open && "animate-slide-up")}
+          className={cn(
+            "font-medium mt-4 text-base",
+            open && "animate-slide-up",
+          )}
         >
-          Forever Starts Here
+          Forever Begins Here
         </p>
       </div>
       <div
@@ -233,7 +287,10 @@ function Couple() {
       </p>
       <div className="flex flex-col items-center w-full" ref={ref}>
         <div className="overflow-hidden max-h-[440px]">
-          <img src="/couple-man.jpeg" alt="" />
+          <img
+            src="https://res.cloudinary.com/ommiputera/image/upload/v1742753504/WhatsApp_Image_2025-03-23_at_22.34.10_1_ajdqu1.jpg"
+            alt=""
+          />
         </div>
         <div
           className={cn(
@@ -241,19 +298,16 @@ function Couple() {
             isVisible && "animate-slide-up",
           )}
         >
-          <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
-            Ommi Putera Karunia
+          <h2 className="text-2xl leading-tight font-bold antic-didone-regular">
+            Ommi Putera Karunia, S.E
           </h2>
           <p className="text-2xl my-4 font-medium dancing-script">The son of</p>
           <p className="text-base font-normal">
-            <span>Bapak Lukman</span>
+            <span>Bapak Lukman, S.Pd</span>
             <br />
             <span>&</span>
             <br />
-            <span>Ibu Nurwilis</span>
-          </p>
-          <p className="text-9xl font-medium text-black/20 absolute -bottom-12 left-6 opacity-50 dancing-script">
-            Ommi
+            <span>Ir. Ibu Nurwilis, M.Si</span>
           </p>
         </div>
       </div>
@@ -266,7 +320,10 @@ function Bride() {
   return (
     <div className="flex flex-col items-center w-full" ref={ref}>
       <div className="overflow-hidden max-h-[440px]">
-        <img src="/couple-women.jpeg" alt="" />
+        <img
+          src="https://res.cloudinary.com/ommiputera/image/upload/v1742753504/WhatsApp_Image_2025-03-23_at_23.23.26_mkio6b.jpg"
+          alt=""
+        />
       </div>
       <div
         className={cn(
@@ -274,21 +331,18 @@ function Bride() {
           isVisible && "animate-slide-up",
         )}
       >
-        <h2 className="text-3xl leading-tight font-bold antic-didone-regular">
-          Hanny Derisca Pradita
+        <h2 className="text-2xl leading-tight font-bold antic-didone-regular">
+          Hanny Derisca Pradita, S.E
         </h2>
         <p className="text-2xl my-4 font-medium dancing-script">
-          The daugher of
+          The daugther of
         </p>
         <p className="text-sm font-normal">
-          <span>Bapak Harisyah Fermana Lafri</span>
+          <span>Bapak Harisyah Fermana Lafri, S.H</span>
           <br />
           <span>&</span>
           <br />
           <span>Ibu Rini Hartati</span>
-        </p>
-        <p className="text-9xl font-medium text-black/20 absolute -bottom-12 -rotate-6 left-6 opacity-50 dancing-script">
-          Hanny
         </p>
       </div>
     </div>
@@ -392,7 +446,8 @@ function Venue() {
       <div ref={ref}>
         <h3 className="text-3xl mb-8 antic-didone-regular">Venue</h3>
         <p className="text-base font-normal max-w-[300px]">
-          Our hearts will be full if you could share this special day with us.
+          Our hearts will shine and overflow with joy if you grace us with your
+          presence on this special day.
         </p>
       </div>
       <div
@@ -417,7 +472,7 @@ function Venue() {
         <p className="text-sm text-black/70 font-normal">
           {" "}
           Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
-          Harapan, Kec. Gading Cempaka, Kota Bengkulu.
+          Harapan, Kec. Gading Cempaka, Kota Bengkulu, Bengkulu.
         </p>
       </div>
       <div
@@ -442,45 +497,254 @@ function Venue() {
         <p className="text-sm text-black/70 font-normal">
           {" "}
           Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
-          Harapan, Kec. Gading Cempaka, Kota Bengkulu.
+          Harapan, Kec. Gading Cempaka, Kota Bengkulu, Bengkulu.
         </p>
       </div>
+      <Button
+        size="lg"
+        className="mt-8 rounded-full bg-neutral-700"
+        onClick={() => {}}
+      >
+        <MapPin className="text-white size-4" />
+        <AnimatedShinyText className="transition ease-out text-white">
+          Location
+        </AnimatedShinyText>
+      </Button>
     </div>
   );
 }
 
 function WeddingWishes() {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isVisible = useIsVisible(ref);
+  const { comments } = useLoaderData<typeof loader>();
+
+  const [formData, setFormData] = React.useState({
+    name: "",
+    content: "",
+    attendance: "",
+  });
+
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const attendanceRef = React.useRef<HTMLInputElement>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleAttendanceChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, attendance: value }));
+    if (attendanceRef.current) {
+      attendanceRef.current.value = value;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+    setFormData({ name: "", content: "", attendance: "" });
+  };
+
+  const isDisabled =
+    !formData.name || !formData.content || !formData.attendance;
+  return (
+    <div className="w-full h-full relative">
+      <div className="text-black py-20 px-6 text-center z-20">
+        <div className="bg-[#e7e2dc] py-12 rounded-lg border border-black/10 shadow-xl">
+          <div>
+            <h3 className="text-3xl mb-8 antic-didone-regular">
+              Wedding Wishes
+            </h3>
+          </div>
+          <Form method="POST" ref={formRef} onSubmit={handleSubmit}>
+            <div className="px-6 flex flex-col gap-3">
+              <Input
+                type="text"
+                placeholder="Nama"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="bg-[#f0f0f0] text-sm h-12"
+              />
+              <Textarea
+                placeholder="Tulis harapanmu disini"
+                name="content"
+                maxLength={300}
+                value={formData.content}
+                onChange={handleChange}
+                className="bg-[#f0f0f0] text-sm h-48"
+              />
+              <ToggleGroup
+                variant="outline"
+                type="single"
+                value={formData.attendance}
+                onValueChange={handleAttendanceChange}
+                className="inline-flex gap-0 -space-x-px rounded-lg bg-[#f0f0f0]"
+              >
+                <ToggleGroupItem
+                  value="not-attend"
+                  className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10 w-full h-12"
+                >
+                  Tidak Hadir
+                </ToggleGroupItem>
+                <ToggleGroupItem
+                  value="attend"
+                  className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10 w-full h-12 border-l border-l-black/10"
+                >
+                  Hadir
+                </ToggleGroupItem>
+              </ToggleGroup>
+              <input type="hidden" name="attendance" ref={attendanceRef} />
+              <Button
+                size="lg"
+                className="bg-[#f0f0f0] h-13"
+                type="submit"
+                disabled={isDisabled}
+              >
+                Kirim
+              </Button>
+            </div>
+          </Form>
+        </div>
+        {!!comments.length && (
+          <div className="mt-12">
+            <ScrollArea className="h-[380px] w-full rounded-md">
+              <div className="flex flex-col gap-3">
+                {comments.map((comment) => {
+                  const date = format(
+                    new Date(comment.createdAt),
+                    "dd MMMM yyyy hh:mm",
+                    {
+                      locale,
+                    },
+                  );
+                  return (
+                    <div
+                      key={comment.id}
+                      className="bg-[#e7e2dc] w-full rounded-lg py-4 px-8 text-left"
+                    >
+                      <h4 className="text-lg font-semibold">{comment.name}</h4>
+                      <p className="text-base font-normal mt-2">
+                        {comment.content}
+                      </p>
+                      <p className="mt-6 text-sm">
+                        {comment.attendance ? "Hadir" : "Tidak Hadir"}
+                      </p>
+                      <span className="text-xs font-normal mt-2 text-black/50">
+                        {date}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </ScrollArea>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Gift() {
+  const [isCopy, setIsCopy] = React.useState(false);
   return (
     <div className="w-full h-full">
-      <div className="bg-[#f0f0f0] text-black py-20 px-6 text-center">
-        <div className="bg-[#e7e2dc] py-6 rounded-lg border border-black/10 shadow-xl">
-          <div className={cn("", isVisible && "animate-slide-down")}>
-            <span className="inline-flex justify-center">
-              <FlowerIcon />
-            </span>
-            <h3 className="text-3xl mb-8 antic-didone-regular">Wedding Wishes</h3>
-          </div>
-          <div className="px-6 flex flex-col gap-3">
-            <Input type="text" placeholder="Name" className="bg-[#f0f0f0] text-sm h-12" />
-            <Textarea placeholder="Type your wishes" className="bg-[#f0f0f0] text-sm h-32" />
-            <Button size="lg" className="bg-[#f0f0f0] h-13">Send</Button>
-          </div>
+      <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
+        <div>
+          <h3 className="text-3xl mb-8 antic-didone-regular">Wedding Gift</h3>
         </div>
-        <div className="mt-16">
-          <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-            Jokester began sneaking into the castle in the middle of the night and leaving
-            jokes all over the place: under the king's pillow, in his soup, even in the
-            royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-            then, one day, the people of the kingdom discovered that the jokes left by
-            Jokester were so funny that they couldn't help but laugh. And once they
-            started laughing, they couldn't stop.
-          </ScrollArea>
+        <div>
+          <p className="text-base font-normal text-black/70 max-w-[350px] mx-auto">
+            Your wishes, blessings, and prayers are the greatest gifts of all.
+            However, if you wish to honor us with a gift, please know that we
+            deeply appreciate your kindness and generosity.
+          </p>
+        </div>
+        <div className="flex flex-col gap-12 mt-14">
+          <div className="flex flex-col justify-center items-center gap-12">
+            <img
+              src="https://ver02.rumahpiatu.org/wp-content/uploads/2020/04/logo-mandiri.png"
+              alt=""
+              className="h-[55px] w-fit object-cover"
+            />
+            <Hanny />
+            <Ommi />
+          </div>
+          <div>
+            <h3 className="text-2xl mb-4 antic-didone-regular">Kirim Hadiah</h3>
+            <p className="text-base font-normal text-black/70 max-w-[300px] mx-auto">
+              Jl. Flamboyan 1 No 28, Kel. Kebung Kenanga, Kec. Ratu Agung, Kota
+              Bengkulu, Bengkulu.
+            </p>
+            <Button
+              className="mt-4 rounded-full bg-neutral-700"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  "Jl. Flamboyan 1 No 28, Kebung Kenanga, Kota Bengkulu",
+                );
+                setIsCopy(true);
+              }}
+            >
+              <AnimatedShinyText className="transition ease-out text-white">
+                {isCopy ? "Berhasil disalin" : "Salin Alamat"}
+              </AnimatedShinyText>
+            </Button>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
+}
+
+function Hanny() {
+  const [isCopy, setIsCopy] = React.useState(false);
+  return (
+    <div>
+      <p className="text-base font-semibold text-black/70">
+        HANNY DERISCA PRADITA
+      </p>
+      <p className="text-base font-normal mt-1 text-black/70">
+        Bank Mandiri - 1790002327042
+      </p>
+      <Button
+        className="mt-4 rounded-full bg-neutral-700"
+        onClick={() => {
+          navigator.clipboard.writeText("1790002327042");
+          setIsCopy(true);
+        }}
+      >
+        <AnimatedShinyText className="transition ease-out text-white">
+          {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
+        </AnimatedShinyText>
+      </Button>
+    </div>
+  );
+}
+
+function Ommi() {
+  const [isCopy, setIsCopy] = React.useState(false);
+  return (
+    <div>
+      <p className="text-base font-semibold text-black/70">
+        OMMI PUTERA KARUNIA
+      </p>
+      <p className="text-base font-normal mt-1 text-black/70">
+        Bank Mandiri - 1790003043853
+      </p>
+      <Button
+        className="mt-4 rounded-full bg-neutral-700"
+        onClick={() => {
+          navigator.clipboard.writeText("1790003043853");
+          setIsCopy(true);
+        }}
+      >
+        <AnimatedShinyText className="transition ease-out text-white">
+          {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
+        </AnimatedShinyText>
+      </Button>
+    </div>
+  );
 }
 
 function Thanks() {
@@ -497,19 +761,19 @@ function Thanks() {
         </div>
         <div className={cn("", isVisible && "animate-slide-up")}>
           <p className="text-base font-normal text-black/70 max-w-[300px] mx-auto">
-            The pleasure of your company is an invaluable gift for us. We look
-            forward to start forever with you by our side.
+            Your presence is a treasure beyond words. As we embark on this
+            journey of forever, we are grateful to have you by our side.
           </p>
         </div>
       </div>
       <img
         src="https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_20.08.58_bqg4qr.jpg"
         alt=""
-        className="h-[320px] object-cover"
+        className="h-[310px] w-full object-cover"
       />
-      <div className="p-12 text-center">
+      <div className="py-24 px-6 text-center">
         <p className="text-sm font-normal">
-          Copyright © 2025 Created with ❤️ by Ommi
+          Copyright © 2025 Created with ❤️ by Ommi Putera
         </p>
       </div>
     </div>
@@ -521,6 +785,9 @@ function Gate() {
 
   const { enterFullscreen } = useFullscreen<HTMLDivElement>();
   const { setOpen, audioPlayerRef } = useContext();
+
+  const [searchParams] = useSearchParams();
+  const to = searchParams.get("to");
   return (
     <motion.div
       className="w-full h-screen fixed max-w-[700px] mx-auto top-0 left-0 right-0 z-50"
@@ -548,6 +815,14 @@ function Gate() {
           </div>
           <div className="w-full mt-6 mb-8">
             <p className="text-5xl font-medium dancing-script">Hanny & Ommi</p>
+          </div>
+          <div className="text-sm mulish mt-16">
+            Kepada Yth.
+            <br />
+            Bapak/Ibu/Saudara/i:
+          </div>
+          <div className="text-lg font-semibold mt-1">
+            {to || "Nama Undangan"}
           </div>
           <Button
             className="mt-8 rounded-full bg-neutral-700"

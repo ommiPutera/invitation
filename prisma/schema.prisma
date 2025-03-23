@@ -14,12 +14,12 @@ datasource db {
 }
 
 model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  authorId  String
-  postId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  content    String
+  name       String
+  attendance Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@map("comments")
 }
