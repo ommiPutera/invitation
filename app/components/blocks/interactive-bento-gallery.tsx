@@ -174,8 +174,7 @@ const GalleryModal = ({
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedItem.id}
-                className="relative w-full aspect-[16/9] max-w-[95%] sm:max-w-[85%] md:max-w-3xl 
-                                         h-[68%] max-h-[80vh] rounded-lg overflow-hidden shadow-md"
+                className="relative w-full aspect-[16/9] max-w-[95%] sm:max-w-[85%] md:max-w-3xl h-[68%] max-h-[80vh] rounded-lg overflow-hidden shadow-md"
                 initial={{ y: 20, scale: 0.97 }}
                 animate={{
                   y: 0,
@@ -206,9 +205,7 @@ const GalleryModal = ({
 
         {/* Close Button */}
         <motion.button
-          className="absolute top-2 sm:top-2.5 md:top-3 right-2 sm:right-2.5 md:right-3 
-                              p-2 rounded-full bg-gray-200/80 text-gray-700 hover:bg-gray-300/80 
-                              text-xs sm:text-sm backdrop-blur-sm "
+          className="absolute top-2 sm:top-2.5 md:top-3 right-2 sm:right-2.5 md:right-3 p-2 rounded-full bg-gray-200/80 text-gray-700 hover:bg-gray-300/80 text-xs sm:text-sm backdrop-blur-sm "
           onClick={onClose}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -256,11 +253,10 @@ const GalleryModal = ({
                                     w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex-shrink-0 
                                     rounded-lg overflow-hidden 
                                     cursor-pointer hover:z-20
-                                    ${
-                                      selectedItem.id === item.id
-                                        ? "ring-2 ring-white/70 shadow-lg"
-                                        : "hover:ring-2 hover:ring-white/30"
-                                    }
+                                    ${selectedItem.id === item.id
+                    ? "ring-2 ring-white/70 shadow-lg"
+                    : "hover:ring-2 hover:ring-white/30"
+                  }
                                 `}
                 initial={{ rotate: index % 2 === 0 ? -15 : 15 }}
                 animate={{

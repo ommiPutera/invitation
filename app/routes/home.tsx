@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { animate, motion } from "framer-motion";
 import React from "react";
 import { Link, useLoaderData } from "react-router";
 
@@ -17,56 +17,53 @@ import { getBase64Image } from "~/utils";
 import { Calendar1, MailOpen } from "lucide-react";
 import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
 import { useIsVisible } from "~/hooks/useIsVisble";
+import { Textarea } from "~/components/ui/textarea";
+import { Input } from "~/components/ui/input";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Wedding of Hanny & Ommi - 13 April 2025" },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742406276/DSCF7159_n0it9i.jpg",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_1_cmpgmc.jpg",
       as: "image",
       type: "image/jpg",
     },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_ewbeze.jpg",
       as: "image",
       type: "image/jpg",
     },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_20.04.12_djbo98.jpg",
       as: "image",
       type: "image/jpg",
     },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_19.41.26_e80dka.jpg",
       as: "image",
       type: "image/jpg",
     },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
-      as: "video",
-      type: "video/mov",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg",
+      as: "image",
+      type: "image/jpg",
     },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/video/upload/v1742405083/e0c5a461-4974-4949-813c-a610cb06cb75_kgq7tl.mov",
-      as: "video",
-      type: "video/mov",
-    },
-    {
-      rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
-      as: "video",
-      type: "video/mov",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.16.49_qvasdj.jpg",
+      as: "image",
+      type: "image/jpg",
     },
   ];
 }
 
-export async function loader({}: Route.LoaderArgs) {
+export async function loader({ }: Route.LoaderArgs) {
   const bride = {
     url: "/hero.png",
     blurURL: await getBase64Image("/hero.png"),
@@ -78,43 +75,37 @@ const mediaItems = [
   {
     id: 1,
     type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406276/DSCF7159_n0it9i.jpg",
-    span: "col-span-2 row-span-5",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_1_cmpgmc.jpg",
+    span: "col-span-2 row-span-3",
   },
   {
     id: 2,
-    type: "video",
-    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405059/IMG_9868_nqoper.mov",
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_20.04.12_djbo98.jpg",
+    span: "col-span-2 row-span-6",
+  },
+  {
+    id: 3,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_ewbeze.jpg",
     span: "col-span-2 row-span-3",
   },
-  // {
-  //   id: 3,
-  //   type: "image",
-  //   url: "https://res.cloudinary.com/ommiputera/image/upload/v1742406760/DSCF7563_vplj0p.jpg",
-  //   span: "col-span-2 row-span-4",
-  // },
   {
     id: 4,
     type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405642/IMG_9818_f1hzo2.jpg",
-    span: "col-span-2 row-span-5",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_19.41.26_e80dka.jpg",
+    span: "col-span-2 row-span-6",
   },
   {
     id: 5,
-    type: "video",
-    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405083/e0c5a461-4974-4949-813c-a610cb06cb75_kgq7tl.mov",
-    span: "col-span-2 row-span-3",
-  },
-  {
-    id: 7,
-    type: "video",
-    url: "https://res.cloudinary.com/ommiputera/video/upload/v1742405855/IMG_4759_lsxm4d.mov",
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg",
     span: "col-span-2 row-span-4",
   },
   {
     id: 6,
     type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742405540/rsvp-bg_ux1t2i.jpg",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.16.49_qvasdj.jpg",
     span: "col-span-2 row-span-6",
   },
 ];
@@ -133,7 +124,7 @@ const audioURL =
   "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
 
 export default function Home() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const audioPlayerRef = React.useRef<AudioPlayerRef>(null);
 
   return (
@@ -144,7 +135,7 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
-        <Gate />
+        {/* <Gate /> */}
         <div className="max-w-[700px] mx-auto top-0 left-0 right-0 pb-0">
           <Opening />
           <Quotes />
@@ -154,6 +145,7 @@ export default function Home() {
             <Galery />
           </div>
           <Venue />
+          <WeddingWishes />
           <Thanks />
         </div>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
@@ -222,7 +214,7 @@ function Quotes() {
           He has placed between you compassion and mercy. Surely in this are
           signs for people who reflect."
         </p>
-        <p className="text-sm mt-8 font-normal text-black/70">
+        <p className="text-base mt-8 font-normal text-black/70">
           Surah Ar-Rum (30:21)
         </p>
       </div>
@@ -427,7 +419,14 @@ function Venue() {
           Jl. Pembangunan No. 3, Gedung Balai Prajurit Garuda Emas, Kel. Padang
           Harapan, Kec. Gading Cempaka, Kota Bengkulu.
         </p>
-        <h3 className="text-2xl antic-didone-regular mt-4">Resepsi</h3>
+      </div>
+      <div
+        className={cn(
+          "bg-[#e7e2dc] text-black relative shadow-lg border border-neutral-200 rounded-xl px-6 py-12 text-center mt-6 w-full flex flex-col gap-8",
+          isVisible && "animate-slide-up",
+        )}
+      >
+        <h3 className="text-2xl antic-didone-regular">Resepsi</h3>
         <div className="flex flex-col gap-2">
           <h4 className="text-xl font-medium">Sunday</h4>
           <div className="mt-1 flex items-center gap-2 justify-center">
@@ -450,6 +449,40 @@ function Venue() {
   );
 }
 
+function WeddingWishes() {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isVisible = useIsVisible(ref);
+  return (
+    <div className="w-full h-full">
+      <div className="bg-[#f0f0f0] text-black py-20 px-6 text-center">
+        <div className="bg-[#e7e2dc] py-6 rounded-lg border border-black/10 shadow-xl">
+          <div className={cn("", isVisible && "animate-slide-down")}>
+            <span className="inline-flex justify-center">
+              <FlowerIcon />
+            </span>
+            <h3 className="text-3xl mb-8 antic-didone-regular">Wedding Wishes</h3>
+          </div>
+          <div className="px-6 flex flex-col gap-3">
+            <Input type="text" placeholder="Name" className="bg-[#f0f0f0] text-sm h-12" />
+            <Textarea placeholder="Type your wishes" className="bg-[#f0f0f0] text-sm h-32" />
+            <Button size="lg" className="bg-[#f0f0f0] h-13">Send</Button>
+          </div>
+        </div>
+        <div className="mt-16">
+          <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+            Jokester began sneaking into the castle in the middle of the night and leaving
+            jokes all over the place: under the king's pillow, in his soup, even in the
+            royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
+            then, one day, the people of the kingdom discovered that the jokes left by
+            Jokester were so funny that they couldn't help but laugh. And once they
+            started laughing, they couldn't stop.
+          </ScrollArea>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function Thanks() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
@@ -469,16 +502,16 @@ function Thanks() {
           </p>
         </div>
       </div>
-      <div className="p-6 text-center">
+      <img
+        src="https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_20.08.58_bqg4qr.jpg"
+        alt=""
+        className="h-[320px] object-cover"
+      />
+      <div className="p-12 text-center">
         <p className="text-sm font-normal">
-          Copyright ©2025 Created with ❤️ by Ommi
+          Copyright © 2025 Created with ❤️ by Ommi
         </p>
       </div>
-      <img
-        src="https://res.cloudinary.com/ommiputera/image/upload/v1742463413/DSCF7576_po0pfl.jpg"
-        alt=""
-        className="max-h-[440px]"
-      />
     </div>
   );
 }
@@ -498,7 +531,7 @@ function Gate() {
       <div className="absolute top-0 w-full mx-auto">
         <div className="relative w-full h-full">
           <img
-            src="/opening.jpg"
+            src="https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.47.59_la631o.jpg"
             alt=""
             className="h-svh object-cover w-full"
           />

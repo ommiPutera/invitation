@@ -1,20 +1,23 @@
 import React from "react";
 
 export function useIsVisible(ref: React.RefObject<HTMLDivElement | null>) {
-  const [isIntersecting, setIntersecting] = React.useState<boolean>(false);
+  const [isIntersecting, setIntersecting] = React.useState(false);
+  const observerRef = React.useRef<IntersectionObserver | null>(null);
 
   React.useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) =>
-      setIntersecting(entry.isIntersecting),
-    );
+    if (!ref.current || observerRef.current) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observerRef.current = new IntersectionObserver(([entry]) => {
+      setIntersecting(entry.isIntersecting);
+    });
+
+    observerRef.current.observe(ref.current);
+
     return () => {
-      observer.disconnect();
+      observerRef.current?.disconnect();
+      observerRef.current = null;
     };
-  }, [ref]);
+  }, []);
 
   return isIntersecting;
 }
