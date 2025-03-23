@@ -1,0 +1,29 @@
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export async function createCommnet({
+  content,
+  name,
+  attendance,
+}: {
+  content: string;
+  name: string;
+  attendance: string;
+}) {
+  return await prisma.comment.create({
+    data: {
+      content,
+      name,
+      attendance: attendance === "attend" ? true : false,
+    },
+  });
+}
+
+export async function getCommnet() {
+  return await prisma.comment.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}

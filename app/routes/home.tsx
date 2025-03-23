@@ -1,12 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-
+import { format } from "date-fns";
+import { id as locale } from "date-fns/locale";
 import { motion } from "framer-motion";
 import { Calendar1, MailOpen, MapPin } from "lucide-react";
 import React from "react";
 import { data, Form, Link, useLoaderData, useSearchParams } from "react-router";
 import { dataWithSuccess } from "remix-toast";
-import { format } from "date-fns";
-import { id as locale } from "date-fns/locale";
 
 import type { Route } from "./+types/home";
 
@@ -26,8 +24,7 @@ import { useIsVisible } from "~/hooks/useIsVisble";
 import { cn } from "~/lib/utils";
 
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
-
-const prisma = new PrismaClient();
+import { createCommnet, getCommnet } from "~/lib/comment.server";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -81,17 +78,19 @@ export async function action({ request }: Route.LoaderArgs) {
   const name = formData.get("name");
   const attendance = formData.get("attendance");
 
-  if (typeof content !== "string" || typeof name !== "string") {
+  if (
+    typeof content !== "string" ||
+    typeof name !== "string" ||
+    typeof attendance !== "string"
+  ) {
     return { success: false, error: "gagal" };
   }
 
   try {
-    await prisma.comment.create({
-      data: {
-        content,
-        name,
-        attendance: attendance === "attend" ? true : false,
-      },
+    await createCommnet({
+      content,
+      name,
+      attendance,
     });
     return dataWithSuccess(
       { success: true },
@@ -103,11 +102,7 @@ export async function action({ request }: Route.LoaderArgs) {
 }
 
 export async function loader({}: Route.LoaderArgs) {
-  const comments = await prisma.comment.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const comments = await getCommnet();
   return data({ comments });
 }
 

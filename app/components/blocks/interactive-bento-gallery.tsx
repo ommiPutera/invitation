@@ -253,10 +253,11 @@ const GalleryModal = ({
                                     w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 flex-shrink-0 
                                     rounded-lg overflow-hidden 
                                     cursor-pointer hover:z-20
-                                    ${selectedItem.id === item.id
-                    ? "ring-2 ring-white/70 shadow-lg"
-                    : "hover:ring-2 hover:ring-white/30"
-                  }
+                                    ${
+                                      selectedItem.id === item.id
+                                        ? "ring-2 ring-white/70 shadow-lg"
+                                        : "hover:ring-2 hover:ring-white/30"
+                                    }
                                 `}
                 initial={{ rotate: index % 2 === 0 ? -15 : 15 }}
                 animate={{
