@@ -55,7 +55,7 @@ export function meta({ }: Route.MetaArgs) {
     },
     {
       rel: "preload",
-      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg",
+      href: "https://res.cloudinary.com/ommiputera/image/upload/v1742748082/WhatsApp_Image_2025-03-23_at_22.02.54_tup4ak.jpg",
       as: "image",
       type: "image/jpg",
     },
@@ -111,37 +111,37 @@ const mediaItems = [
     id: 1,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_1_cmpgmc.jpg",
-    span: "col-span-2 row-span-3",
+    span: "col-span-2 row-span-4",
   },
   {
     id: 2,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_20.04.12_djbo98.jpg",
-    span: "col-span-2 row-span-6",
+    span: "col-span-2 row-span-4",
   },
   {
     id: 3,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_ewbeze.jpg",
-    span: "col-span-2 row-span-3",
+    span: "col-span-2 row-span-4",
   },
   {
     id: 4,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_19.41.26_e80dka.jpg",
-    span: "col-span-2 row-span-6",
+    span: "col-span-2 row-span-4",
   },
   {
     id: 5,
     type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742742647/WhatsApp_Image_2025-03-23_at_22.02.54_kzds5c.jpg",
     span: "col-span-2 row-span-4",
   },
   {
     id: 6,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.16.49_qvasdj.jpg",
-    span: "col-span-2 row-span-6",
+    span: "col-span-2 row-span-4",
   },
 ];
 
@@ -177,6 +177,9 @@ export default function Home() {
           <Couple />
           <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center flex flex-col gap-20 justify-center items-center">
             <Countdown />
+            <p className="text-base font-normal max-w-[300px] text-black/70">
+              God has written our fate into a beautiful story. With hearts full of love and hope, we invite you to be part of our most cherished moment.
+            </p>
             <Galery />
           </div>
           <Venue />
@@ -203,16 +206,16 @@ function Opening() {
     <div className="w-full h-full relative">
       <div className="relative w-full h-full">
         <img
-          src="https://res.cloudinary.com/ommiputera/image/upload/v1742748082/WhatsApp_Image_2025-03-23_at_22.02.54_tup4ak.jpg"
+          src="https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg"
           alt=""
           className="object-cover w-full h-svh"
         />
         <div className="h-svh w-full bg-black/20 absolute top-0"></div>
       </div>
-      <div className="absolute top-[6svh] w-full text-center flex flex-col justify-center items-center">
+      <div className="absolute top-[8svh] w-full text-center flex flex-col justify-center items-center">
         <div
           className={cn(
-            "text-4xl tracking-tighter leading-tight antic-didone-regular",
+            "text-3xl tracking-tighter text-white leading-none antic-didone-regular",
             open && "animate-slide-down",
           )}
         >
@@ -222,7 +225,7 @@ function Opening() {
         </div>
         <p
           className={cn(
-            "font-medium mt-4 text-base",
+            "font-medium mt-4 text-base !text-white",
             open && "animate-slide-up",
           )}
         >
@@ -275,9 +278,9 @@ function Couple() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
   return (
-    <div className="text-black py-20 flex flex-col gap-12 w-full">
+    <div className="text-black pb-20 flex flex-col gap-12 w-full">
       <Bride />
-      <p className="text-2xl font-bold text-center antic-didone-regular text-white">
+      <p className="text-4xl font-bold text-center antic-didone-regular text-black">
         &
       </p>
       <div className="flex flex-col items-center w-full" ref={ref}>
@@ -302,7 +305,7 @@ function Couple() {
             <br />
             <span>&</span>
             <br />
-            <span>Ir. Ibu Nurwilis, M.Si</span>
+            <span>Ibu Ir. Nurwilis, M.Si</span>
           </p>
         </div>
       </div>
@@ -402,7 +405,7 @@ function Countdown() {
         <Button
           size="lg"
           className={cn(
-            "mt-12 rounded-full bg-neutral-700",
+            "mt-12 rounded-full !bg-neutral-700",
             isVisible && "animate-slide-down",
           )}
           asChild
@@ -435,12 +438,12 @@ function Venue() {
   const isVisible = useIsVisible(ref);
   return (
     <div className="py-20 px-6 text-center flex flex-col justify-center items-center">
-      <span className="inline-flex justify-center text-foreground mb-2">
+      <span className="inline-flex justify-center mb-2 text-black">
         <FlowerIcon />
       </span>
       <div ref={ref}>
-        <h3 className="text-3xl mb-8 antic-didone-regular">Venue</h3>
-        <p className="text-base font-normal max-w-[300px]">
+        <h3 className="text-3xl mb-8 antic-didone-regular text-black">Venue</h3>
+        <p className="text-base font-normal max-w-[300px] text-black">
           Our hearts will shine and overflow with joy if you grace us with your
           presence on this special day.
         </p>
@@ -451,18 +454,18 @@ function Venue() {
           isVisible && "animate-slide-up",
         )}
       >
-        <h3 className="text-2xl antic-didone-regular">Akad Nikah</h3>
+        <h3 className="text-2xl antic-didone-regular text-black">Akad Nikah</h3>
         <div className="flex flex-col gap-2">
-          <h4 className="text-xl font-medium">Sunday</h4>
+          <h4 className="text-3xl font-medium text-black dancing-script">Sunday</h4>
           <div className="mt-1 flex items-center gap-2 justify-center">
             <p className="text-4xl dancing-script">13</p>
             <span className="h-10 border-r border-black"></span>
-            <div className="text-left text-sm">
+            <div className="text-left text-sm text-black">
               <p>April</p>
               <p>2025</p>
             </div>
           </div>
-          <p className="text-base font-medium">07:30 WIB - Selesai</p>
+          <p className="text-base font-medium text-black">07:30 WIB - Selesai</p>
         </div>
         <p className="text-sm text-black/70 font-normal">
           {" "}
@@ -476,18 +479,18 @@ function Venue() {
           isVisible && "animate-slide-up",
         )}
       >
-        <h3 className="text-2xl antic-didone-regular">Resepsi</h3>
+        <h3 className="text-2xl antic-didone-regular text-black">Resepsi</h3>
         <div className="flex flex-col gap-2">
-          <h4 className="text-xl font-medium">Sunday</h4>
+          <h4 className="text-3xl font-medium text-black dancing-script">Sunday</h4>
           <div className="mt-1 flex items-center gap-2 justify-center">
-            <p className="text-4xl dancing-script">13</p>
+            <p className="text-4xl dancing-script text-black">13</p>
             <span className="h-10 border-r border-black"></span>
-            <div className="text-left text-sm">
+            <div className="text-left text-sm text-black">
               <p>April</p>
               <p>2025</p>
             </div>
           </div>
-          <p className="text-base font-medium">10:30 WIB - Selesai</p>
+          <p className="text-base font-medium text-black">10:30 WIB - Selesai</p>
         </div>
         <p className="text-sm text-black/70 font-normal">
           {" "}
@@ -495,15 +498,20 @@ function Venue() {
           Harapan, Kec. Gading Cempaka, Kota Bengkulu, Bengkulu.
         </p>
       </div>
+      <div className="px-6 py-20">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4789.58092346745!2d102.28289341130495!3d-3.8207882961369704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e36ba9c44ecdf4b%3A0x5d7a92fe768b62fc!2sBalai%20Prajurit%20Garuda%20Emas!5e1!3m2!1sid!2ssg!4v1742830790919!5m2!1sid!2ssg" width="300" height="300" className="border-none" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+      </div>
       <Button
         size="lg"
-        className="mt-8 rounded-full bg-neutral-700"
-        onClick={() => { }}
+        className="rounded-full !bg-neutral-700 text-white"
+        asChild
       >
-        <MapPin className="text-white size-4" />
-        <AnimatedShinyText className="transition ease-out text-white">
-          Location
-        </AnimatedShinyText>
+        <Link to="https://maps.app.goo.gl/DjSYRBa1XmBPT7eB6" target="_blank">
+          <MapPin className="size-4" />
+          <AnimatedShinyText className="transition ease-out text-white">
+            Location
+          </AnimatedShinyText>
+        </Link>
       </Button>
     </div>
   );
@@ -593,7 +601,7 @@ function WeddingWishes() {
               <input type="hidden" name="attendance" ref={attendanceRef} />
               <Button
                 size="lg"
-                className="bg-[#f0f0f0] h-13"
+                className="!bg-[#f0f0f0] h-13 text-black"
                 type="submit"
                 disabled={isDisabled}
               >
@@ -657,11 +665,11 @@ function Gift() {
           </p>
         </div>
         <div className="flex flex-col gap-12 mt-14">
-          <div className="flex flex-col justify-center items-center gap-12">
+          <div className="flex flex-col justify-center items-center gap-12 w-full">
             <img
               src="https://ver02.rumahpiatu.org/wp-content/uploads/2020/04/logo-mandiri.png"
               alt=""
-              className="h-[55px] w-fit object-cover"
+              className="h-[55px] w-full object-contain"
             />
             <Hanny />
             <Ommi />
@@ -673,7 +681,7 @@ function Gift() {
               Bengkulu, Bengkulu.
             </p>
             <Button
-              className="mt-4 rounded-full bg-neutral-700"
+              className="mt-4 rounded-full !bg-neutral-700 text-white"
               onClick={() => {
                 navigator.clipboard.writeText(
                   "Jl. Flamboyan 1 No 28, Kebung Kenanga, Kota Bengkulu",
@@ -703,7 +711,7 @@ function Hanny() {
         Bank Mandiri - 1790002327042
       </p>
       <Button
-        className="mt-4 rounded-full bg-neutral-700"
+        className="mt-4 rounded-full !bg-neutral-700 text-white"
         onClick={() => {
           navigator.clipboard.writeText("1790002327042");
           setIsCopy(true);
@@ -728,7 +736,7 @@ function Ommi() {
         Bank Mandiri - 1790003043853
       </p>
       <Button
-        className="mt-4 rounded-full bg-neutral-700"
+        className="mt-4 rounded-full !bg-neutral-700 text-white"
         onClick={() => {
           navigator.clipboard.writeText("1790003043853");
           setIsCopy(true);
@@ -766,9 +774,9 @@ function Thanks() {
         alt=""
         className="h-[310px] w-full object-cover"
       />
-      <div className="py-24 px-6 text-center">
+      <div className="py-6 px-6 text-center">
         <p className="text-sm font-normal">
-          Copyright © 2025 Created with ❤️ by Ommi Putera
+          Copyright © 2025 Created with ❤️ by Ommi
         </p>
       </div>
     </div>
@@ -801,26 +809,26 @@ function Gate() {
         </div>
       </div>
       <div className="relative text-center h-svh w-full">
-        <div className="absolute bottom-[6svh] w-full">
+        <div className="absolute bottom-[3svh] w-full">
           <div className="w-full">
-            <h1 className="text-base mulish font-bold">WEDDING INVITATION</h1>
-            <p className="text-sm mulish font-medium mt-2">
+            <h1 className="text-sm mulish font-bold !text-white">WEDDING INVITATION</h1>
+            <p className="text-sm mulish font-medium mt-1 !text-white">
               You are invited to The Wedding of
             </p>
           </div>
-          <div className="w-full mt-6 mb-8">
-            <p className="text-5xl font-medium dancing-script">Hanny & Ommi</p>
+          <div className="w-full mt-4 mb-6">
+            <p className="text-4xl font-medium dancing-script !text-white">Hanny & Ommi</p>
           </div>
-          <div className="text-sm mulish mt-16">
+          <div className="text-sm mulish mt-6 !text-white">
             Kepada Yth.
             <br />
             Bapak/Ibu/Saudara/i:
           </div>
-          <div className="text-lg font-semibold mt-1">
+          <div className="text-base font-semibold mt-1 text-white">
             {to || "Nama Undangan"}
           </div>
           <Button
-            className="mt-8 rounded-full bg-neutral-700"
+            className="mt-4 rounded-full !bg-neutral-700 text-white"
             onClick={() => {
               setMoveUp(true);
               setOpen?.(true);
@@ -828,8 +836,8 @@ function Gate() {
               audioPlayerRef?.current?.playAudio();
             }}
           >
-            <MailOpen className="text-white size-4" />
-            <AnimatedShinyText className="transition ease-out text-white">
+            <MailOpen className="size-4" />
+            <AnimatedShinyText className="transition ease-out !text-white">
               Open the Invitation
             </AnimatedShinyText>
           </Button>

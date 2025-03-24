@@ -45,7 +45,7 @@ const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
           variant="default"
           size="icon"
           className={cn(
-            "size-12 rounded-full bg-rose-100",
+            "size-12 rounded-full !bg-rose-100",
             !open && "hidden",
             isPlaying && "animate-pulse",
           )}
@@ -64,7 +64,7 @@ const PlayIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     viewBox="0 0 32 32"
-    className="fill-rose-500"
+    className="!fill-rose-500"
   >
     <g id="SVGRepo_iconCarrier">
       <g id="music">
@@ -80,7 +80,7 @@ const PauseIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     viewBox="0 0 32 32"
-    className="fill-rose-500"
+    className="!fill-rose-500"
   >
     <g id="SVGRepo_iconCarrier">
       <g id="pause">
