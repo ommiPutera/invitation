@@ -14,7 +14,6 @@ import { AnimatedShinyText } from "~/components/animated-shiny-text";
 import AudioPlayer, { type AudioPlayerRef } from "~/components/audio-player";
 import InteractiveBentoGallery from "~/components/blocks/interactive-bento-gallery";
 import { SlidingNumber } from "~/components/sliding-number";
-import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Textarea } from "~/components/ui/textarea";
@@ -25,8 +24,9 @@ import { cn } from "~/lib/utils";
 
 import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import { createCommnet, getCommnet } from "~/lib/comment.server";
+import { ImagesSlider } from "~/components/image-slider";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "Wedding of Hanny & Ommi - 13 April 2025" },
     {
@@ -101,7 +101,7 @@ export async function action({ request }: Route.LoaderArgs) {
   }
 }
 
-export async function loader({ }: Route.LoaderArgs) {
+export async function loader({}: Route.LoaderArgs) {
   const comments = await getCommnet();
   return data({ comments });
 }
@@ -120,15 +120,15 @@ const mediaItems = [
     span: "col-span-2 row-span-4",
   },
   {
-    id: 3,
-    type: "image",
-    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_ewbeze.jpg",
-    span: "col-span-2 row-span-4",
-  },
-  {
     id: 4,
     type: "image",
     url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_19.41.26_e80dka.jpg",
+    span: "col-span-2 row-span-4",
+  },
+  {
+    id: 3,
+    type: "image",
+    url: "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_ewbeze.jpg",
     span: "col-span-2 row-span-4",
   },
   {
@@ -178,7 +178,9 @@ export default function Home() {
           <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center flex flex-col gap-20 justify-center items-center">
             <Countdown />
             <p className="text-base font-normal max-w-[300px] text-black/70">
-              God has written our fate into a beautiful story. With hearts full of love and hope, we invite you to be part of our most cherished moment.
+              God has written our fate into a beautiful story. With hearts full
+              of love and hope, we invite you to be part of our most cherished
+              moment.
             </p>
             <Galery />
           </div>
@@ -202,17 +204,17 @@ export default function Home() {
 
 function Opening() {
   const { open } = useContext();
+  const images = [
+    "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.47.59_la631o.jpg",
+    "https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_1_cmpgmc.jpg",
+    "https://res.cloudinary.com/ommiputera/image/upload/v1742742647/WhatsApp_Image_2025-03-23_at_22.02.54_kzds5c.jpg",
+  ];
   return (
     <div className="w-full h-full relative">
       <div className="relative w-full h-full">
-        <img
-          src="https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg"
-          alt=""
-          className="object-cover w-full h-svh"
-        />
-        <div className="h-svh w-full bg-black/20 absolute top-0"></div>
+        <ImagesSlider className="h-svh" images={images} />
       </div>
-      <div className="absolute top-[8svh] w-full text-center flex flex-col justify-center items-center">
+      <div className="absolute top-[42px] w-full text-center flex flex-col justify-center items-center">
         <div
           className={cn(
             "text-3xl tracking-tighter text-white leading-none antic-didone-regular",
@@ -402,24 +404,19 @@ function Countdown() {
         </div>
       </div>
       <div ref={ref}>
-        <Button
-          size="lg"
+        <Link
+          to="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MGE1YXZjYjVoa21vbGRxODhyYmdpZjNra3Igb21pcHV0cmFrYXJ1bmlhQG0&tmsrc=omiputrakarunia%40gmail.com"
+          target="_blank"
           className={cn(
-            "mt-12 rounded-full !bg-neutral-700",
+            "mt-12 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3",
             isVisible && "animate-slide-down",
           )}
-          asChild
         >
-          <Link
-            to="https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MGE1YXZjYjVoa21vbGRxODhyYmdpZjNra3Igb21pcHV0cmFrYXJ1bmlhQG0&tmsrc=omiputrakarunia%40gmail.com"
-            target="_blank"
-          >
-            <Calendar1 className="text-white size-5" />
-            <AnimatedShinyText className="transition ease-out text-white">
-              Save the Date
-            </AnimatedShinyText>
-          </Link>
-        </Button>
+          <Calendar1 className="text-white size-5" />
+          <AnimatedShinyText className="transition ease-out text-white">
+            Save the Date
+          </AnimatedShinyText>
+        </Link>
       </div>
     </div>
   );
@@ -456,7 +453,9 @@ function Venue() {
       >
         <h3 className="text-2xl antic-didone-regular text-black">Akad Nikah</h3>
         <div className="flex flex-col gap-2">
-          <h4 className="text-3xl font-medium text-black dancing-script">Sunday</h4>
+          <h4 className="text-3xl font-medium text-black dancing-script">
+            Sunday
+          </h4>
           <div className="mt-1 flex items-center gap-2 justify-center">
             <p className="text-4xl dancing-script">13</p>
             <span className="h-10 border-r border-black"></span>
@@ -465,7 +464,9 @@ function Venue() {
               <p>2025</p>
             </div>
           </div>
-          <p className="text-base font-medium text-black">07:30 WIB - Selesai</p>
+          <p className="text-base font-medium text-black">
+            07:30 WIB - Selesai
+          </p>
         </div>
         <p className="text-sm text-black/70 font-normal">
           {" "}
@@ -481,7 +482,9 @@ function Venue() {
       >
         <h3 className="text-2xl antic-didone-regular text-black">Resepsi</h3>
         <div className="flex flex-col gap-2">
-          <h4 className="text-3xl font-medium text-black dancing-script">Sunday</h4>
+          <h4 className="text-3xl font-medium text-black dancing-script">
+            Sunday
+          </h4>
           <div className="mt-1 flex items-center gap-2 justify-center">
             <p className="text-4xl dancing-script text-black">13</p>
             <span className="h-10 border-r border-black"></span>
@@ -490,7 +493,9 @@ function Venue() {
               <p>2025</p>
             </div>
           </div>
-          <p className="text-base font-medium text-black">10:30 WIB - Selesai</p>
+          <p className="text-base font-medium text-black">
+            10:30 WIB - Selesai
+          </p>
         </div>
         <p className="text-sm text-black/70 font-normal">
           {" "}
@@ -499,20 +504,26 @@ function Venue() {
         </p>
       </div>
       <div className="px-6 py-20">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4789.58092346745!2d102.28289341130495!3d-3.8207882961369704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e36ba9c44ecdf4b%3A0x5d7a92fe768b62fc!2sBalai%20Prajurit%20Garuda%20Emas!5e1!3m2!1sid!2ssg!4v1742830790919!5m2!1sid!2ssg" width="300" height="300" className="border-none" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4789.58092346745!2d102.28289341130495!3d-3.8207882961369704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e36ba9c44ecdf4b%3A0x5d7a92fe768b62fc!2sBalai%20Prajurit%20Garuda%20Emas!5e1!3m2!1sid!2ssg!4v1742830790919!5m2!1sid!2ssg"
+          width="300"
+          height="300"
+          className="border-none"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
-      <Button
-        size="lg"
-        className="rounded-full !bg-neutral-700 text-white"
-        asChild
+      <Link
+        to="https://maps.app.goo.gl/DjSYRBa1XmBPT7eB6"
+        target="_blank"
+        className="rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
       >
-        <Link to="https://maps.app.goo.gl/DjSYRBa1XmBPT7eB6" target="_blank">
-          <MapPin className="size-4" />
-          <AnimatedShinyText className="transition ease-out text-white">
-            Location
-          </AnimatedShinyText>
-        </Link>
-      </Button>
+        <MapPin className="size-4" />
+        <AnimatedShinyText className="transition ease-out text-white">
+          Location
+        </AnimatedShinyText>
+      </Link>
     </div>
   );
 }
@@ -599,14 +610,13 @@ function WeddingWishes() {
                 </ToggleGroupItem>
               </ToggleGroup>
               <input type="hidden" name="attendance" ref={attendanceRef} />
-              <Button
-                size="lg"
-                className="!bg-[#f0f0f0] h-13 text-black"
+              <button
+                className="!bg-[#f0f0f0] h-13 text-black inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive px-4 py-2 has-[>svg]:px-3"
                 type="submit"
                 disabled={isDisabled}
               >
                 Kirim
-              </Button>
+              </button>
             </div>
           </Form>
         </div>
@@ -680,8 +690,8 @@ function Gift() {
               Jl. Flamboyan 1 No 28, Kel. Kebung Kenanga, Kec. Ratu Agung, Kota
               Bengkulu, Bengkulu.
             </p>
-            <Button
-              className="mt-4 rounded-full !bg-neutral-700 text-white"
+            <button
+              className="mt-4 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
               onClick={() => {
                 navigator.clipboard.writeText(
                   "Jl. Flamboyan 1 No 28, Kebung Kenanga, Kota Bengkulu",
@@ -692,7 +702,7 @@ function Gift() {
               <AnimatedShinyText className="transition ease-out text-white">
                 {isCopy ? "Berhasil disalin" : "Salin Alamat"}
               </AnimatedShinyText>
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -710,8 +720,8 @@ function Hanny() {
       <p className="text-base font-normal mt-1 text-black/70">
         Bank Mandiri - 1790002327042
       </p>
-      <Button
-        className="mt-4 rounded-full !bg-neutral-700 text-white"
+      <button
+        className="mt-4 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
         onClick={() => {
           navigator.clipboard.writeText("1790002327042");
           setIsCopy(true);
@@ -720,7 +730,7 @@ function Hanny() {
         <AnimatedShinyText className="transition ease-out text-white">
           {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
         </AnimatedShinyText>
-      </Button>
+      </button>
     </div>
   );
 }
@@ -735,8 +745,8 @@ function Ommi() {
       <p className="text-base font-normal mt-1 text-black/70">
         Bank Mandiri - 1790003043853
       </p>
-      <Button
-        className="mt-4 rounded-full !bg-neutral-700 text-white"
+      <button
+        className="mt-4 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
         onClick={() => {
           navigator.clipboard.writeText("1790003043853");
           setIsCopy(true);
@@ -745,7 +755,7 @@ function Ommi() {
         <AnimatedShinyText className="transition ease-out text-white">
           {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
         </AnimatedShinyText>
-      </Button>
+      </button>
     </div>
   );
 }
@@ -801,7 +811,7 @@ function Gate() {
       <div className="absolute top-0 w-full mx-auto">
         <div className="relative w-full h-full">
           <img
-            src="https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.47.59_la631o.jpg"
+            src="https://res.cloudinary.com/ommiputera/image/upload/v1742736005/WhatsApp_Image_2025-03-22_at_20.17.12_nzl2q6.jpg"
             alt=""
             className="h-svh object-cover w-full"
           />
@@ -809,26 +819,30 @@ function Gate() {
         </div>
       </div>
       <div className="relative text-center h-svh w-full">
-        <div className="absolute bottom-[3svh] w-full">
+        <div className="absolute bottom-[5svh] w-full">
           <div className="w-full">
-            <h1 className="text-sm mulish font-bold !text-white">WEDDING INVITATION</h1>
+            <h1 className="text-sm mulish font-bold !text-white">
+              WEDDING INVITATION
+            </h1>
             <p className="text-sm mulish font-medium mt-1 !text-white">
               You are invited to The Wedding of
             </p>
           </div>
-          <div className="w-full mt-4 mb-6">
-            <p className="text-4xl font-medium dancing-script !text-white">Hanny & Ommi</p>
+          <div className="w-full mt-6 mb-6">
+            <p className="text-4xl font-medium dancing-script !text-white">
+              Hanny & Ommi
+            </p>
           </div>
-          <div className="text-sm mulish mt-6 !text-white">
+          <div className="text-sm mulish mt-12 !text-white">
             Kepada Yth.
             <br />
             Bapak/Ibu/Saudara/i:
           </div>
-          <div className="text-base font-semibold mt-1 text-white">
+          <div className="text-base font-semibold mt-2 text-white">
             {to || "Nama Undangan"}
           </div>
-          <Button
-            className="mt-4 rounded-full !bg-neutral-700 text-white"
+          <button
+            className="mt-6 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
             onClick={() => {
               setMoveUp(true);
               setOpen?.(true);
@@ -837,10 +851,8 @@ function Gate() {
             }}
           >
             <MailOpen className="size-4" />
-            <AnimatedShinyText className="transition ease-out !text-white">
-              Open the Invitation
-            </AnimatedShinyText>
-          </Button>
+            <span className="!text-white">Open the Invitation</span>
+          </button>
         </div>
       </div>
     </motion.div>

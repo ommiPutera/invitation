@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "invitation",
+  "short_name": "invitation",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

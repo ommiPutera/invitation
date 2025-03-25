@@ -16,7 +16,8 @@ import { Toaster } from "./components/ui/toaster";
 import { useToast } from "./hooks/useToast";
 
 import type { Route } from "./+types/root";
-import "./app.css";
+
+import appStyles from "./app.css?url";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -29,6 +30,8 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Antic+Didone&family=Dancing+Script:wght@400..700&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap",
   },
+  { rel: "stylesheet", href: appStyles },
+  { rel: "manifest", href: "/site.webmanifest" },
 ];
 
 export const loader = async ({ request }: Route.LoaderArgs) => {

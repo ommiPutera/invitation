@@ -1,7 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 
-import { Button } from "~/components/ui/button";
-
 import { cn } from "~/lib/utils";
 
 export type AudioPlayerRef = {
@@ -41,11 +39,9 @@ const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
     return (
       <div className="fixed right-4 bottom-4 bg-transparent">
         <audio ref={audioRef} src={audioURL} preload="metadata" />
-        <Button
-          variant="default"
-          size="icon"
+        <button
           className={cn(
-            "size-12 rounded-full !bg-rose-100",
+            "size-12 rounded-full !bg-rose-100 flex justify-center items-center",
             !open && "hidden",
             isPlaying && "animate-pulse",
           )}
@@ -53,7 +49,7 @@ const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? <PauseIcon /> : <PlayIcon />}
-        </Button>
+        </button>
       </div>
     );
   },
@@ -63,6 +59,7 @@ const PlayIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
+    width={18}
     viewBox="0 0 32 32"
     className="!fill-rose-500"
   >
@@ -79,6 +76,7 @@ const PauseIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
+    width={18}
     viewBox="0 0 32 32"
     className="!fill-rose-500"
   >
