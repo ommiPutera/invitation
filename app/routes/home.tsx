@@ -26,7 +26,7 @@ import { ToggleGroup, ToggleGroupItem } from "~/components/ui/toggle-group";
 import { createCommnet, getCommnet } from "~/lib/comment.server";
 import { ImagesSlider } from "~/components/image-slider";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "Wedding of Hanny & Ommi - 13 April 2025" },
     {
@@ -94,14 +94,14 @@ export async function action({ request }: Route.LoaderArgs) {
     });
     return dataWithSuccess(
       { success: true },
-      "Terima Kasih with ❤️ - Hanny & Ommi",
+      "Terima Kasih with 🖤 - Hanny & Ommi",
     );
   } catch (error) {
     return data({ success: false, error: "Gagal" });
   }
 }
 
-export async function loader({}: Route.LoaderArgs) {
+export async function loader({ }: Route.LoaderArgs) {
   const comments = await getCommnet();
   return data({ comments });
 }
@@ -178,7 +178,7 @@ export default function Home() {
           />
         </div>
         <Gate />
-        <div className="xl:max-w-[35vw] absolute top-0 right-0 pb-0">
+        <div className="w-full xl:max-w-[35vw] absolute top-0 right-0 pb-0">
           <Opening />
           <Quotes />
           <Couple />
@@ -441,7 +441,7 @@ function Venue() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
   return (
-    <div className="bg-[#fff5e8] py-20 px-6 text-center flex flex-col justify-center items-center max-w-[700px] xl:max-w-full mx-auto">
+    <div className="bg-[#ebe2d6] py-20 px-6 text-center flex flex-col justify-center items-center max-w-[700px] xl:max-w-full mx-auto">
       <span className="inline-flex justify-center mb-2 text-black">
         <FlowerIcon />
       </span>
@@ -571,7 +571,7 @@ function WeddingWishes() {
     !formData.name || !formData.content || !formData.attendance;
   return (
     <div className="w-full h-full relative">
-      <div className="text-black py-20 px-6 text-center z-20">
+      <div className="text-black py-20 px-3 text-center z-20">
         <div className="bg-[#e7e2dc] py-12 rounded-lg border border-black/10 shadow-xl max-w-[700px] xl:max-w-full mx-auto">
           <div>
             <h3 className="text-3xl mb-8 antic-didone-regular">
@@ -668,7 +668,7 @@ function Gift() {
   const [isCopy, setIsCopy] = React.useState(false);
   return (
     <div className="w-full h-full max-w-[700px] xl:max-w-full mx-auto">
-      <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
+      <div className="bg-[#f0f0f0] text-black py-20 px-6 text-center">
         <div>
           <h3 className="text-3xl mb-8 antic-didone-regular">Wedding Gift</h3>
         </div>
@@ -791,7 +791,7 @@ function Thanks() {
       />
       <div className="py-6 px-6 text-center">
         <p className="text-sm font-normal">
-          Copyright © 2025 Created with ❤️ by Ommi
+          Copyright © 2025 Created with 🖤 by Ommi
         </p>
       </div>
     </div>
