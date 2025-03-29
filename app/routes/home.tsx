@@ -156,7 +156,7 @@ const Context = React.createContext<ContextValue>({});
 const useContext = () => React.useContext(Context);
 
 const audioURL =
-  "https://petra.viding.co/music/43880818-675c05d35577a-1734084051.mp3";
+  "https://res.cloudinary.com/ommiputera/video/upload/v1743257761/John_Mayer_-_You_re_Gonna_Live_Forever_in_Me__Hydr0.org_t3ekbp.mp3";
 
 export default function Home() {
   const [open, setOpen] = React.useState(false);
@@ -170,12 +170,19 @@ export default function Home() {
           open && "h-full !overflow-scroll",
         )}
       >
+        <div className="fixed left-0 hidden xl:block xl:w-[calc(100%_-_35vw)] h-full">
+          <img
+            src="https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_19.24.58_ewbeze.jpg"
+            alt=""
+            className="object-cover w-full h-full"
+          />
+        </div>
         <Gate />
-        <div className="max-w-[500px] mx-auto top-0 left-0 right-0 pb-0">
+        <div className="xl:max-w-[35vw] absolute top-0 right-0 pb-0">
           <Opening />
           <Quotes />
           <Couple />
-          <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center flex flex-col gap-20 justify-center items-center">
+          <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center flex flex-col gap-20 justify-center items-center max-w-[700px] xl:max-w-full mx-auto">
             <Countdown />
             <p className="text-base font-normal max-w-[300px] text-black/70">
               God has written our fate into a beautiful story. With hearts full
@@ -186,11 +193,11 @@ export default function Home() {
           </div>
           <Venue />
           <Gift />
-          <div className="h-full w-full -mb-32">
+          <div className="h-full w-full -mb-32 max-w-[700px] xl:max-w-full mx-auto">
             <img
               src="https://res.cloudinary.com/ommiputera/image/upload/v1742748082/WhatsApp_Image_2025-03-23_at_22.34.10_upxasu.jpg"
               alt=""
-              className="h-[390px] w-full object-cover"
+              className="h-[60vh] w-full object-cover"
             />
           </div>
           <WeddingWishes />
@@ -210,7 +217,7 @@ function Opening() {
     "https://res.cloudinary.com/ommiputera/image/upload/v1742742647/WhatsApp_Image_2025-03-23_at_22.02.54_kzds5c.jpg",
   ];
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative max-w-[700px] xl:max-w-full mx-auto">
       <div className="relative w-full h-full">
         <ImagesSlider className="h-svh" images={images} />
       </div>
@@ -250,7 +257,7 @@ function Quotes() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
   return (
-    <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
+    <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center max-w-[700px] xl:max-w-full mx-auto">
       <div className={cn("", isVisible && "animate-slide-down")} ref={ref}>
         <span className="inline-flex justify-center">
           <FlowerIcon />
@@ -280,13 +287,13 @@ function Couple() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
   return (
-    <div className="text-black pb-20 flex flex-col gap-12 w-full">
+    <div className="text-black bg-[#e7e2dc] pb-20 flex flex-col gap-12 w-full max-w-[700px] xl:max-w-full mx-auto">
       <Bride />
       <p className="text-4xl font-bold text-center antic-didone-regular text-black">
         &
       </p>
       <div className="flex flex-col items-center w-full" ref={ref}>
-        <div className="overflow-hidden max-h-[440px]">
+        <div className="overflow-hidden max-h-[60vh]">
           <img
             src="https://res.cloudinary.com/ommiputera/image/upload/v1742753504/WhatsApp_Image_2025-03-23_at_22.34.10_1_ajdqu1.jpg"
             alt=""
@@ -319,7 +326,7 @@ function Bride() {
   const isVisible = useIsVisible(ref);
   return (
     <div className="flex flex-col items-center w-full" ref={ref}>
-      <div className="overflow-hidden max-h-[440px]">
+      <div className="overflow-hidden max-h-[60vh]">
         <img
           src="https://res.cloudinary.com/ommiputera/image/upload/v1742753504/WhatsApp_Image_2025-03-23_at_23.23.26_mkio6b.jpg"
           alt=""
@@ -434,7 +441,7 @@ function Venue() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
   return (
-    <div className="py-20 px-6 text-center flex flex-col justify-center items-center">
+    <div className="bg-[#fff5e8] py-20 px-6 text-center flex flex-col justify-center items-center max-w-[700px] xl:max-w-full mx-auto">
       <span className="inline-flex justify-center mb-2 text-black">
         <FlowerIcon />
       </span>
@@ -565,7 +572,7 @@ function WeddingWishes() {
   return (
     <div className="w-full h-full relative">
       <div className="text-black py-20 px-6 text-center z-20">
-        <div className="bg-[#e7e2dc] py-12 rounded-lg border border-black/10 shadow-xl">
+        <div className="bg-[#e7e2dc] py-12 rounded-lg border border-black/10 shadow-xl max-w-[700px] xl:max-w-full mx-auto">
           <div>
             <h3 className="text-3xl mb-8 antic-didone-regular">
               Wedding Wishes
@@ -619,9 +626,7 @@ function WeddingWishes() {
               </button>
             </div>
           </Form>
-        </div>
-        {!!comments?.length && (
-          <div className="mt-12">
+          <div className="w-full mt-12">
             <ScrollArea className="h-[380px] w-full rounded-md">
               <div className="flex flex-col gap-3">
                 {comments?.map((comment) => {
@@ -653,7 +658,7 @@ function WeddingWishes() {
               </div>
             </ScrollArea>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -662,7 +667,7 @@ function WeddingWishes() {
 function Gift() {
   const [isCopy, setIsCopy] = React.useState(false);
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full max-w-[700px] xl:max-w-full mx-auto">
       <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
         <div>
           <h3 className="text-3xl mb-8 antic-didone-regular">Wedding Gift</h3>
@@ -803,7 +808,7 @@ function Gate() {
   const to = searchParams.get("to");
   return (
     <motion.div
-      className="w-full h-screen fixed max-w-[700px] mx-auto top-0 left-0 right-0 z-50"
+      className="w-full h-screen fixed xl:max-w-[35vw] top-0 right-0 z-50"
       initial={{ x: 0 }}
       animate={{ x: moveUp ? 1500 : 0 }}
       transition={{ duration: 2, ease: "easeInOut" }}
