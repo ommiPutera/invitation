@@ -192,7 +192,6 @@ export default function Home() {
             <Galery />
           </div>
           <Venue />
-          <Gift />
           <div className="h-full w-full -mb-32 max-w-[700px] xl:max-w-full mx-auto">
             <img
               src="https://res.cloudinary.com/ommiputera/image/upload/v1742748082/WhatsApp_Image_2025-03-23_at_22.34.10_upxasu.jpg"
@@ -201,6 +200,7 @@ export default function Home() {
             />
           </div>
           <WeddingWishes />
+          <Gift />
           <Thanks />
         </div>
         <AudioPlayer ref={audioPlayerRef} open={open} audioURL={audioURL} />
@@ -441,7 +441,7 @@ function Venue() {
   const ref = React.useRef<HTMLDivElement>(null);
   const isVisible = useIsVisible(ref);
   return (
-    <div className="bg-[#ebe2d6] py-20 px-6 text-center flex flex-col justify-center items-center max-w-[700px] xl:max-w-full mx-auto">
+    <div className="bg-[#e2ddd5] py-20 px-6 text-center flex flex-col justify-center items-center max-w-[700px] xl:max-w-full mx-auto">
       <span className="inline-flex justify-center mb-2 text-black">
         <FlowerIcon />
       </span>
@@ -618,7 +618,7 @@ function WeddingWishes() {
               </ToggleGroup>
               <input type="hidden" name="attendance" ref={attendanceRef} />
               <button
-                className="!bg-[#f0f0f0] h-13 text-black inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive px-4 py-2 has-[>svg]:px-3"
+                className="!bg-[#f0f0f0] h-13 rounded-lg text-black inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive px-4 py-2 has-[>svg]:px-3"
                 type="submit"
                 disabled={isDisabled}
               >
@@ -668,7 +668,7 @@ function Gift() {
   const [isCopy, setIsCopy] = React.useState(false);
   return (
     <div className="w-full h-full max-w-[700px] xl:max-w-full mx-auto">
-      <div className="bg-[#f0f0f0] text-black py-20 px-6 text-center">
+      <div className="bg-[#e7e2dc] text-black py-20 px-6 text-center">
         <div>
           <h3 className="text-3xl mb-8 antic-didone-regular">Wedding Gift</h3>
         </div>
@@ -787,11 +787,11 @@ function Thanks() {
       <img
         src="https://res.cloudinary.com/ommiputera/image/upload/v1742736004/WhatsApp_Image_2025-03-22_at_20.08.58_bqg4qr.jpg"
         alt=""
-        className="h-[310px] w-full object-cover"
+        className="h-[220px] w-full object-cover"
       />
-      <div className="py-6 px-6 text-center">
+      <div className="py-4 px-6 text-center">
         <p className="text-sm font-normal">
-          Copyright © 2025 Created with 🖤 by Ommi
+          Created with 🖤 by Ommi
         </p>
       </div>
     </div>
