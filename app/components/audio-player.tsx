@@ -41,11 +41,14 @@ const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
         <audio ref={audioRef} src={audioURL} preload="metadata" />
         <button
           className={cn(
-            "size-12 rounded-full !bg-rose-100 flex justify-center items-center",
+            "size-12 rounded-full bg-rose-100 flex justify-center items-center",
             !open && "hidden",
             isPlaying && "animate-pulse",
           )}
           onClick={togglePlay}
+          style={{
+            backgroundColor: "#ffe4e6"
+          }}
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? <PauseIcon /> : <PlayIcon />}
@@ -61,7 +64,10 @@ const PlayIcon = () => (
     xmlSpace="preserve"
     width={18}
     viewBox="0 0 32 32"
-    className="!fill-rose-500"
+    className="fill-rose-500"
+    style={{
+      fill: "#ff2056",
+    }}
   >
     <g id="SVGRepo_iconCarrier">
       <g id="music">
@@ -78,7 +84,10 @@ const PauseIcon = () => (
     xmlSpace="preserve"
     width={18}
     viewBox="0 0 32 32"
-    className="!fill-rose-500"
+    className="fill-rose-500"
+    style={{
+      fill: "#ff2056",
+    }}
   >
     <g id="SVGRepo_iconCarrier">
       <g id="pause">

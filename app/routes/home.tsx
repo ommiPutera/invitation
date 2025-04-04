@@ -418,6 +418,10 @@ function Countdown() {
             "mt-12 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3",
             isVisible && "animate-slide-down",
           )}
+          style={{
+            backgroundColor: "#404040",
+            color: "#fff",
+          }}
         >
           <Calendar1 className="text-white size-5" />
           <AnimatedShinyText className="transition ease-out text-white">
@@ -525,6 +529,10 @@ function Venue() {
         to="https://maps.app.goo.gl/DjSYRBa1XmBPT7eB6"
         target="_blank"
         className="rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
+        style={{
+          backgroundColor: "#404040",
+          color: "#fff",
+        }}
       >
         <MapPin className="size-4" />
         <AnimatedShinyText className="transition ease-out text-white">
@@ -568,7 +576,7 @@ function WeddingWishes() {
   };
 
   const isDisabled =
-    !formData.name || !formData.content || !formData.attendance;
+    !formData.name || !formData.content
   return (
     <div className="w-full h-full relative">
       <div className="text-black py-20 px-3 text-center z-20">
@@ -600,64 +608,79 @@ function WeddingWishes() {
                 variant="outline"
                 type="single"
                 value={formData.attendance}
+                defaultValue="not-attend"
                 onValueChange={handleAttendanceChange}
                 className="inline-flex gap-0 -space-x-px rounded-lg bg-[#f0f0f0]"
               >
                 <ToggleGroupItem
                   value="not-attend"
                   className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10 w-full h-12"
+                  style={{
+                    backgroundColor: formData.attendance ? "#f0f0f0" : "#262626",
+                    color: formData.attendance ? "#000" : "#fff",
+                  }}
                 >
                   Tidak Hadir
                 </ToggleGroupItem>
                 <ToggleGroupItem
                   value="attend"
                   className="rounded-none shadow-none first:rounded-s-lg last:rounded-e-lg focus-visible:z-10 w-full h-12 border-l border-l-black/10"
+                  style={{
+                    backgroundColor: !formData.attendance ? "#f0f0f0" : "#262626",
+                    color: !formData.attendance ? "#000" : "#fff",
+                  }}
                 >
                   Hadir
                 </ToggleGroupItem>
               </ToggleGroup>
               <input type="hidden" name="attendance" ref={attendanceRef} />
               <button
-                className="!bg-[#f0f0f0] h-13 rounded-lg text-black inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive px-4 py-2 has-[>svg]:px-3"
+                className="bg-[#f0f0f0] h-13 rounded-lg text-black inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive px-4 py-2 has-[>svg]:px-3"
                 type="submit"
                 disabled={isDisabled}
+                style={{
+                  backgroundColor: isDisabled ? "#f0f0f0" : "#262626",
+                  color: isDisabled ? "#000" : "#fff",
+                }}
               >
                 Kirim
               </button>
             </div>
           </Form>
-          <div className="w-full mt-12">
-            <ScrollArea className="h-[380px] w-full rounded-md">
-              <div className="flex flex-col gap-3">
-                {comments?.map((comment) => {
-                  const date = format(
-                    new Date(comment.createdAt),
-                    "dd MMMM yyyy hh:mm",
-                    {
-                      locale,
-                    },
-                  );
-                  return (
-                    <div
-                      key={comment.id}
-                      className="bg-[#e7e2dc] w-full rounded-lg py-4 px-8 text-left"
-                    >
-                      <h4 className="text-lg font-semibold">{comment.name}</h4>
-                      <p className="text-base font-normal mt-2">
-                        {comment.content}
-                      </p>
-                      <p className="mt-6 text-sm">
-                        {comment.attendance ? "Hadir" : "Tidak Hadir"}
-                      </p>
-                      <span className="text-xs font-normal mt-2 text-black/50">
-                        {date}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </ScrollArea>
-          </div>
+          {!!comments.length && (
+            <div className="w-full mt-12">
+              <ScrollArea className="h-[380px] w-full rounded-md">
+                <div className="flex flex-col gap-3">
+                  {comments.map((comment) => {
+                    const date = format(
+                      new Date(comment.createdAt),
+                      "dd MMMM yyyy hh:mm",
+                      {
+                        locale,
+                      },
+                    );
+                    return (
+                      <div
+                        key={comment.id}
+                        className="bg-[#e7e2dc] w-full rounded-lg py-4 px-8 text-left"
+                      >
+                        <h4 className="text-lg font-semibold">{comment.name}</h4>
+                        <p className="text-base font-normal mt-2">
+                          {comment.content}
+                        </p>
+                        <p className="mt-6 text-sm">
+                          {comment.attendance ? "Hadir" : "Tidak Hadir"}
+                        </p>
+                        <span className="text-xs font-normal mt-2 text-black/50">
+                          {date}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -703,6 +726,10 @@ function Gift() {
                 );
                 setIsCopy(true);
               }}
+              style={{
+                backgroundColor: "#404040",
+                color: "#fff",
+              }}
             >
               <AnimatedShinyText className="transition ease-out text-white">
                 {isCopy ? "Berhasil disalin" : "Salin Alamat"}
@@ -731,6 +758,10 @@ function Hanny() {
           navigator.clipboard.writeText("1790002327042");
           setIsCopy(true);
         }}
+        style={{
+          backgroundColor: "#404040",
+          color: "#fff",
+        }}
       >
         <AnimatedShinyText className="transition ease-out text-white">
           {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
@@ -755,6 +786,10 @@ function Ommi() {
         onClick={() => {
           navigator.clipboard.writeText("1790003043853");
           setIsCopy(true);
+        }}
+        style={{
+          backgroundColor: "#404040",
+          color: "#fff",
         }}
       >
         <AnimatedShinyText className="transition ease-out text-white">
@@ -854,9 +889,13 @@ function Gate() {
               enterFullscreen();
               audioPlayerRef?.current?.playAudio();
             }}
+            style={{
+              background: "#404040",
+              color: "#fff",
+            }}
           >
-            <MailOpen className="size-4" />
-            <span className="!text-white">Open the Invitation</span>
+            <MailOpen className="size-4" style={{ color: "#fff" }} />
+            <span className="!text-white" style={{ color: "#fff" }}>Open the Invitation</span>
           </button>
         </div>
       </div>
