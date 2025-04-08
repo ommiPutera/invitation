@@ -840,12 +840,12 @@ function OmmiDipay() {
         Ommi Putera Karunia
       </p>
       <p className="text-base font-normal mt-1 text-black/70">
-        Nomor Dipay - 089508182045
+        No Dipay - 089508182045
       </p>
       <button
         className="mt-4 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
         onClick={() => {
-          navigator.clipboard.writeText("1790003043853");
+          navigator.clipboard.writeText("089508182045");
           setIsCopy(true);
         }}
         style={{
@@ -854,7 +854,7 @@ function OmmiDipay() {
         }}
       >
         <AnimatedShinyText className="transition ease-out text-white">
-          {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
+          {isCopy ? "Berhasil disalin" : "Salin No Dipay"}
         </AnimatedShinyText>
       </button>
     </div>
