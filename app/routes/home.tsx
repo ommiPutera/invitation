@@ -712,6 +712,38 @@ function Gift() {
             <Hanny />
             <Ommi />
           </div>
+          <div className="flex flex-col justify-center items-center gap-12 w-full my-12">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="119"
+              height="32"
+              fill="none"
+              viewBox="0 0 119 32"
+            >
+              <mask
+                id="mask0_645_62"
+                width="119"
+                height="32"
+                x="0"
+                y="0"
+                maskUnits="userSpaceOnUse"
+                style={{ maskType: "luminance" }}
+              >
+                <path fill="#fff" d="M0 0h118.936v32H0z"></path>
+              </mask>
+              <g mask="url(#mask0_645_62)">
+                <path
+                  fill="#1877F2"
+                  d="M0 8V0h31.858v8zm0 8h6.897a9.13 9.13 0 0 0 7.197 7.815 9.2 9.2 0 0 0 3.67 0 9.1 9.1 0 0 0 4.599-2.495A9.2 9.2 0 0 0 24.961 16h6.897a16 16 0 0 1-5.797 12.345 15.8 15.8 0 0 1-8.503 3.572 16.1 16.1 0 0 1-4.839-.242 15.8 15.8 0 0 1-6.922-3.328 16 16 0 0 1-5.08-7.59A16 16 0 0 1 0 16"
+                ></path>
+                <path
+                  fill="#000"
+                  d="M46.33 24.783q-1.664 0-3.083-.631a7.3 7.3 0 0 1-2.436-1.741 8.1 8.1 0 0 1-1.587-2.598 8.9 8.9 0 0 1-.571-3.2q0-1.71.54-3.182a8.3 8.3 0 0 1 1.495-2.583 6.9 6.9 0 0 1 2.282-1.741 6.66 6.66 0 0 1 2.897-.631q1.788 0 3.222.84 1.435.842 2.235 2.193V2.56h4.133v17.298q0 .633.215.902.215.27.74.3v3.424q-1.08.21-1.758.21-1.11 0-1.82-.541a1.97 1.97 0 0 1-.8-1.41l-.094-.993a5.8 5.8 0 0 1-2.42 2.267 7 7 0 0 1-3.19.767zm1.078-3.423a4.28 4.28 0 0 0 2.343-.75q.525-.362.942-.842c.27-.31.484-.667.631-1.05v-3.755a4.4 4.4 0 0 0-.694-1.216 5 5 0 0 0-1.017-.96 5.3 5.3 0 0 0-1.202-.647 3.5 3.5 0 0 0-1.248-.24 3.8 3.8 0 0 0-1.712.39 4 4 0 0 0-1.341 1.067 5.35 5.35 0 0 0-1.17 3.348 4.77 4.77 0 0 0 1.264 3.303c.394.424.87.76 1.402.99.57.246 1.184.369 1.802.36zm12.117 3.123V8.747h4.13v15.736zm0-17.928V2.56h4.13v3.995zm17.544 18.228q-1.911 0-3.33-.827a5.95 5.95 0 0 1-2.22-2.236v9.16h-4.13V8.747h3.606v2.702a6.5 6.5 0 0 1 2.313-2.177q1.417-.795 3.268-.796 1.634 0 3.02.645a7.5 7.5 0 0 1 2.39 1.743 8.1 8.1 0 0 1 1.573 2.583 8.7 8.7 0 0 1 .57 3.137 9.7 9.7 0 0 1-.523 3.213 8.2 8.2 0 0 1-1.466 2.614 6.8 6.8 0 0 1-2.235 1.74 6.4 6.4 0 0 1-2.836.632m-1.387-3.423a3.8 3.8 0 0 0 1.711-.39 4.1 4.1 0 0 0 1.34-1.053 4.9 4.9 0 0 0 .864-1.53 5.4 5.4 0 0 0 .309-1.803 5 5 0 0 0-.34-1.847 4.6 4.6 0 0 0-.94-1.486 4.38 4.38 0 0 0-3.19-1.351 4.3 4.3 0 0 0-2.344.75c-.347.24-.663.522-.94.84a3.5 3.5 0 0 0-.633 1.053v3.693a5.4 5.4 0 0 0 1.696 2.237q1.14.886 2.467.887m15.661 3.423a6.3 6.3 0 0 1-2.189-.375 5.3 5.3 0 0 1-1.757-1.052 4.9 4.9 0 0 1-1.155-1.576 4.7 4.7 0 0 1-.417-1.983 4.3 4.3 0 0 1 .508-2.057 4.75 4.75 0 0 1 1.42-1.605q.908-.66 2.172-1.038a9.7 9.7 0 0 1 2.775-.374c.707 0 1.415.058 2.111.18a8.8 8.8 0 0 1 1.835.51v-.901q0-1.56-.91-2.403-.909-.84-2.697-.84c-.862 0-1.719.152-2.528.45-.892.337-1.741.78-2.528 1.32l-1.265-2.551q3.114-2.012 6.722-2.012 3.484 0 5.41 1.667t1.927 4.82v4.896q0 .63.231.9.232.27.756.3v3.424c-.598.129-1.207.2-1.818.21q-1.173 0-1.805-.51c-.42-.338-.7-.82-.786-1.352l-.093-.871a7.1 7.1 0 0 1-2.62 2.103 7.7 7.7 0 0 1-3.299.72m1.172-2.943a5.5 5.5 0 0 0 1.989-.36q.94-.36 1.464-.961.677-.51.678-1.142v-1.801a10.3 10.3 0 0 0-1.603-.436 9 9 0 0 0-1.665-.165q-1.603 0-2.62.706-1.018.705-1.017 1.787-.001 1.02.8 1.696.803.675 1.974.676m12.054 5.707q.503.144 1.018.224.413.067.833.076c.253.002.505-.05.739-.151q.338-.15.617-.525.338-.486.555-1.036.278-.66.584-1.652l-6.381-15.736h4.256L111.168 21l3.884-12.253h3.884l-6.783 18.86a5.64 5.64 0 0 1-2.003 2.702q-1.418 1.05-3.515 1.05a6.6 6.6 0 0 1-2.066-.33z"
+                ></path>
+              </g>
+            </svg>
+            <OmmiDipay />
+          </div>
           <div>
             <h3 className="text-2xl mb-4 antic-didone-regular">Kirim Hadiah</h3>
             <p className="text-base font-normal text-black/70 max-w-[300px] mx-auto">
@@ -780,6 +812,35 @@ function Ommi() {
       </p>
       <p className="text-base font-normal mt-1 text-black/70">
         Bank Mandiri - 1790003043853
+      </p>
+      <button
+        className="mt-4 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
+        onClick={() => {
+          navigator.clipboard.writeText("1790003043853");
+          setIsCopy(true);
+        }}
+        style={{
+          backgroundColor: "#404040",
+          color: "#fff",
+        }}
+      >
+        <AnimatedShinyText className="transition ease-out text-white">
+          {isCopy ? "Berhasil disalin" : "Salin No Rekening"}
+        </AnimatedShinyText>
+      </button>
+    </div>
+  );
+}
+
+function OmmiDipay() {
+  const [isCopy, setIsCopy] = React.useState(false);
+  return (
+    <div>
+      <p className="text-base font-semibold text-black/70">
+        Ommi Putera Karunia
+      </p>
+      <p className="text-base font-normal mt-1 text-black/70">
+        Nomor Dipay - 089508182045
       </p>
       <button
         className="mt-4 rounded-full bg-neutral-700 text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-9 px-4 py-2 has-[>svg]:px-3"
